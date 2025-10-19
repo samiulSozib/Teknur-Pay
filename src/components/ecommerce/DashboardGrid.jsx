@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { serviceCategories } from "../../redux/actions/serviceCategoriesAction";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { getTransferCommissions } from "../../redux/actions/transferCommissionAction";
 
 export default function DashboardGrid() {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ export default function DashboardGrid() {
 
   useEffect(() => {
     dispatch(serviceCategories());
+    dispatch(getTransferCommissions())
   }, [dispatch]);
 
   // Function to handle category click

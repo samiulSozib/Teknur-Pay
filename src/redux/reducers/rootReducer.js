@@ -13,6 +13,8 @@ import sellingPriceReducer from './sellingPriceReducer'
 import commissionGroupReducer from './commissionGroupReducer'
 import hawalaOrdersReducer from './hawalaOrdersReducer'
 import resellerPaymentReducer from './resellerPaymentReducer'
+import loanRequestReducer from './loanRequestReducer'
+import transferCommissionReducer from './transferCommissionReducer'
 
 
 const rootReducer=combineReducers({
@@ -29,7 +31,9 @@ const rootReducer=combineReducers({
     sellingPriceReducer:sellingPriceReducer,
     commissionGroupReducer:commissionGroupReducer,
     hawalaOrdersReducer:hawalaOrdersReducer,
-    resellerPaymentReducer:resellerPaymentReducer
+    resellerPaymentReducer:resellerPaymentReducer,
+    loanRequestReducer:loanRequestReducer,
+    transferCommissionReducer:transferCommissionReducer
 })
 
 export default rootReducer

@@ -14,7 +14,8 @@ export default function TransactionCards() {
     {
       label: t("REQUEST_LOAN_BALANCE"),
       color: "bg-green-400 hover:bg-green-400",
-      icon:"/public/assets/icons/transactionsicon.png"
+      icon:"/public/assets/icons/transactionsicon.png",
+      link: "/loan-requests"
     },
     {
       label: t("MONEY_EXCHANGE"),
@@ -37,7 +38,8 @@ export default function TransactionCards() {
     {
       label: t("TRANSFER_COMMISSION_TO_BALANCE"),
       color: "bg-teal-400 hover:bg-teal-400",
-      icon:"/public/assets/icons/transactionsicon.png"
+      icon:"/public/assets/icons/transactionsicon.png",
+      link: "/transfer-commissions"
     },
   ];
 

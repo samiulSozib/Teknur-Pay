@@ -42,6 +42,8 @@ import TransactionsType from "./pages/TransactionsType/TransactionsType";
 import MoneyExchangeRate from "./pages/MoneyExchangeRate/MoneyExchangeRate";
 import CountryViewPage from "./pages/CountryViewPage/CountryViewPage";
 import BundlePage from "./pages/BundlePage/BundlePage";
+import { LoanRequest } from "./pages/LoanRequest/LoanRequest";
+import { TransferCommissions } from "./pages/TransferCommissions/TransferCommissions";
 
 export default function App() {
   return (
@@ -75,6 +77,10 @@ export default function App() {
             <Route path="/help-articles" element={<ProtectedRoute><HelpArticles/></ProtectedRoute>}/>
             <Route path="/money-exchnage-rate" element={<ProtectedRoute><MoneyExchangeRate/></ProtectedRoute>}/>
             <Route path="/nonsocial" element={<ProtectedRoute><CountryViewPage/></ProtectedRoute>}/>
+            <Route path="/loan-requests" element={<ProtectedRoute><LoanRequest/></ProtectedRoute>}/>
+            <Route path="/transfer-commissions" element={<ProtectedRoute><TransferCommissions/></ProtectedRoute>}/>
+
+
 
 
 

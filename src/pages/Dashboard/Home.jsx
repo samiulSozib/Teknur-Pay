@@ -5,9 +5,11 @@ import InfoCard from "../../components/ecommerce/InfoCard"
 import DashboardGrid from "../../components/ecommerce/DashboardGrid";
 import { useTranslation } from "react-i18next";
 
+
 export default function Home() {
 
   const { t } = useTranslation()
+
 
   return (
     <>
