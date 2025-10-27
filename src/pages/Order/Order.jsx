@@ -314,16 +314,16 @@ export default function Order() {
                     </span>
                     <div
                       className={`${
-                        order.status === 2
+                        order.status == 2
                           ? "bg-red-500"
-                          : order.status === 1
+                          : order.status == 1
                           ? "bg-green-500"
                           : "bg-yellow-500"
                       } font-medium text-white flex flex-row justify-between items-center rounded-md px-2 py-1`}
                     >
-                      {order.status === 2
+                      {order.status == 2
                         ? "Rejected"
-                        : order.status === 1
+                        : order.status == 1
                         ? "Successful"
                         : "Pending"}
                     </div>

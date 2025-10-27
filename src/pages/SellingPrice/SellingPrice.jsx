@@ -100,9 +100,9 @@ export const SellingPrice = () => {
   };
 
   const serviceOptions = serviceList.map((service) => ({
-    value: service.id,
-    label: service.company.company_name,
-    image: service.company.company_logo,
+    value: service?.id,
+    label: service?.company?.company_name,
+    image: service?.company?.company_logo,
   }));
 
   // Custom option with image

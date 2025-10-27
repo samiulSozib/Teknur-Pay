@@ -307,16 +307,16 @@ export default function BundlePage() {
                 {filteredServiceList.map((service, index) => (
                   <button
                     key={index}
-                    onClick={() => setCompanyId(service.company.id)}
+                    onClick={() => setCompanyId(service?.company.id)}
                     className={`flex-shrink-0 px-4 py-2 text-[16px] font-medium rounded-lg border transition-all
-                    ${companyId === service.company.id
+                    ${companyId === service?.company?.id
                         ? "bg-gradient-to-r from-purple-300 to-blue-300 text-gray-900 shadow-md"
                         : "border-gray-300 text-gray-700 hover:bg-gray-100"
                       }`}
                   >
                     <img
-                      src={service.company.company_logo}
-                      alt={service.company.company_name}
+                      src={service?.company?.company_logo}
+                      alt={service?.company?.company_name}
                       className="w-10 h-10 rounded-lg object-contain"
                     />
                   </button>
