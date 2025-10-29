@@ -36,14 +36,35 @@ export default function CreditRecharge() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filterStatus, setFilterStatus] = useState("");
-  const { orderList, total_items } = useSelector((state) => state.orderListReducer);
+  const { orderList,total_items, per_page, current_page, total_pages } = useSelector((state) => state.orderListReducer);
   const { user_info } = useSelector((state) => state.auth);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [from, setForm] = useState(0);
+  const [to, setTo] = useState(0);
+
 
   useEffect(() => {
-    dispatch(getOrders(page + 1, rowsPerPage, filterStatus,""));
+    dispatch(getOrders(page + 1, rowsPerPage, filterStatus,"custom_recharge"));
   }, [dispatch, page, rowsPerPage, filterStatus]);
+
+    useEffect(() => {
+    if (current_page && per_page && total_items) {
+      const fromValue = (current_page - 1) * per_page + 1;
+      const toValue = Math.min(current_page * per_page, total_items);
+
+      setForm(fromValue);
+      setTo(toValue);
+    }
+  }, [current_page, per_page, total_items]);
+
+  const goToPreviousPage = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  const goToNextPage = () => {
+    if (page < total_pages) setPage(page + 1);
+  };
 
   useEffect(()=>{
     dispatch(getCountries())
@@ -357,14 +378,86 @@ const handleRecharge=()=>{
         ))}
       </div>
 
+       {/* pagination */}
+        <div className="flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4">
+          {/* {t("ROWS_PER_PAGE")} selection */}
+          <div className="flex items-center space-x-2 text-gray-600">
+            <span>{t("ROWS_PER_PAGE")}:</span>
+            <select className="p-1 min-w-[60px] text-gray-700">
+              <option>10</option>
+              <option>20</option>
+            </select>
+          </div>
+
+          {/* Pagination info */}
+          <div className="text-gray-700 mx-4">
+            {from}-{to} of {total_items}
+          </div>
+
+          {/* Navigation buttons */}
+          <div className="flex items-center space-x-2">
+            <button
+              className={`p-2 ${
+                page === 1
+                  ? "text-gray-300"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+              onClick={goToPreviousPage}
+              disabled={page === 1}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              className={`p-2 ${
+                page === total_pages
+                  ? "text-gray-300"
+                  : "text-gray-700 hover:text-gray-900"
+              }`}
+              onClick={goToNextPage}
+              disabled={page === total_pages}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* pagination */}
+
       </div>
       {modalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-[90%] md:w-[80%] lg:w-80 text-left m-2">
           <div className={`border ${selectedOrder.status === 2 ? "border-red-500" : selectedOrder.status === 1 ? "border-green-500" : "border-yellow-500"} rounded-md flex flex-col gap-3`}>
 
-              <div className="flex items-center justify-center mt-3">
-                <img src={selectedOrder.status===0?'/images/img/Pending.png':selectedOrder.status===1?"/images/img/Success.png":"/images/img/Unsuccess.png"} alt="" className="w-[70px] h-[70px] object-contain"/>
+              <div className="flex flex-col items-center justify-center mt-3">
+                <img src={selectedOrder.status==0?'/images/img/pending_image.png':selectedOrder.status==1?"/images/img/success_image.png":"/images/img/red_cancel_icon.png"} alt="" className="w-[70px] h-[70px] object-contain"/>
+                <span>{selectedOrder.status==0?t('PENDING'):selectedOrder.status==1?t('SUCCESSFUL'):t('REJECTED')}</span>
               </div>
 
               <div className="flex flex-col gap-2 p-3">

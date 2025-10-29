@@ -262,18 +262,18 @@ export default function Order() {
               >
                 <div
                   className={`flex gap-1  flex-col bg-white shadow-md rounded-lg border ${
-                    order.status === 2
+                    order.status == 2
                       ? "border-red-500"
-                      : order.status === 1
+                      : order.status == 1
                       ? "border-yellow-300"
                       : "border-green-500"
                   } p-2`}
                 >
                   <div
                     className={`${
-                      order.status === 2
+                      order.status == 2
                         ? "bg-red-500"
-                        : order.status === 1
+                        : order.status == 1
                         ? "bg-green-500"
                         : "bg-yellow-500"
                     } font-medium text-white flex flex-row justify-between items-center rounded-t-md px-2 py-1`}
@@ -352,11 +352,10 @@ export default function Order() {
         </div>
         {/* pagination */}
         <div className="flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4">
-          {/* Rows per page selection */}
+          {/* {t("ROWS_PER_PAGE")} selection */}
           <div className="flex items-center space-x-2 text-gray-600">
-            <span>Rows per page:</span>
+            <span>{t("ROWS_PER_PAGE")}:</span>
             <select className="p-1 min-w-[60px] text-gray-700">
-              <option>5</option>
               <option>10</option>
               <option>20</option>
             </select>
@@ -428,25 +427,26 @@ export default function Order() {
             <div
               ref={modalRef}
               className={`border ${
-                selectedOrder.status === 2
+                selectedOrder.status == 2
                   ? "border-red-500"
-                  : selectedOrder.status === 1
+                  : selectedOrder.status == 1
                   ? "border-green-500"
                   : "border-yellow-500"
               } rounded-md flex flex-col gap-3`}
             >
-              <div className="flex items-center justify-center mt-3">
+              <div className="flex flex-col items-center justify-center mt-3">
                 <img
                   src={
-                    selectedOrder.status === 0
-                      ? "/images/img/Pending.png"
-                      : selectedOrder.status === 1
-                      ? "/images/img/Success.png"
-                      : "/images/img/Unsuccess.png"
+                    selectedOrder.status == 0
+                      ? "/images/img/pending_image.png"
+                      : selectedOrder.status == 1
+                      ? "/images/img/success_image.png"
+                      : "/images/img/red_cancel_icon.png"
                   }
                   alt=""
                   className="w-[70px] h-[70px] object-contain"
                 />
+                <span>{selectedOrder.status==0?t('PENDING'):selectedOrder.status==1?t('SUCCESSFUL'):t('REJECTED')}</span>
               </div>
 
               <div className="flex flex-col gap-2 p-3">

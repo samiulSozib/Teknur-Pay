@@ -67,7 +67,7 @@
   "RECHARGEABLE_ACCOUNT": "Rechargeable Account",
   "APPROVED": "Approved",
   "REJECTED": "Rejected ❌",
-  "PENDING": "Pending",
+  "PENDING": "Pending ⏳",
   "BUNDLE_DETAILS": "Bundle Details",
   "TITLE": "Title",
   "DESCRIPTION": "Description",
@@ -278,7 +278,6 @@
   "RECEIVER_NAME": "Receiver Name",
   "HAWALA_AMOUNT": "Hawala Amount",
   "PAYABLE_AMOUNT": "Payable Amount",
-  "ROWS_PER_PAGE": "Rows Per Page",
   "RECEIVER_ID_CARD_NUMBER": "Receiver ID Card Number",
   "RECEIVER_FATHERS_NAME": "Receiver Father's Name",
   "HAWALA_CURRENCY_RATE": "Hawala Currency Rate",
@@ -363,5 +362,12 @@
   "TRANSFER_COMMISSION_ADDED_SUCCESSFULLY": "Transfer commission request submitted successfully",
   "FAILED_TO_ADD_TRANSFER_COMMISSION": "Failed to add transfer commission",
   "USE_ALL": " / All",
-  "AMOUNT_EXCEEDS_BALANCE": "Amount cannot exceed available balance"
+  "AMOUNT_EXCEEDS_BALANCE": "Amount cannot exceed available balance",
+  "CONTACT_US_VIA_WHATSAPP": "Contact us via WhatsApp",
+  "CONTACT_US_MESSAGE": "Hello, I would like to get more information about your services",
+  "WHATSAPP_CARD_MESSAGE": "Hello, I need help with your services",
+  "SUCCESSFUL": "Successful ✅",
+  "COMPLETED": "Completed ✅",
+  "FAILED": "Failed ❌",
+  "ROWS_PER_PAGE":"Rows Per Page"
 }

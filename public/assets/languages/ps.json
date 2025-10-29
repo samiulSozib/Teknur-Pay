@@ -67,7 +67,7 @@
   "RECHARGEABLE_ACCOUNT": "بیا چارج کیدونکی حساب",
   "APPROVED": "تصویب شو",
   "REJECTED": "رد شو ❌",
-  "PENDING": "پاتې",
+  "PENDING": "پاتې ⏳",
   "BUNDLE_DETAILS": "د بسته تفصیلات",
   "TITLE": "عنوان",
   "DESCRIPTION": "تفصیل",
@@ -363,5 +363,12 @@
   "TRANSFER_COMMISSION_ADDED_SUCCESSFULLY": "د کمیسیون د لیږد غوښتنه په بریالیتوب سره وسپارل شوه",
   "FAILED_TO_ADD_TRANSFER_COMMISSION": "د کمیسیون لیږد زیاتول ناکام شول",
   "USE_ALL": " / ټول",
-  "AMOUNT_EXCEEDS_BALANCE": "مقدار نشي د موجودي څخه زیات شي"
+  "AMOUNT_EXCEEDS_BALANCE": "مقدار نشي د موجودي څخه زیات شي",
+  "CONTACT_US_VIA_WHATSAPP": "د واټس اپ له لارې موږ سره اړیکه ونیسئ",
+  "CONTACT_US_MESSAGE": "سلام، زه غواړم ستاسو د خدماتو په اړه نور معلومات ترلاسه کړم",
+  "WHATSAPP_CARD_MESSAGE": "سلام، زه ستاسو د خدماتو په اړه مرسته ته اړتیا لرم",
+  "SUCCESSFUL": "بریالی ✅",
+  "COMPLETED": "بشپړ شو ✅",
+  "FAILED": "ناکام ❌"
+
 }

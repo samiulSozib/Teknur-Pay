@@ -67,7 +67,7 @@
   "RECHARGEABLE_ACCOUNT": "حساب قابل شارژ",
   "APPROVED": "تأیید شده",
   "REJECTED": "رد شده ❌",
-  "PENDING": "در انتظار",
+  "PENDING": "در انتظار ⏳",
   "BUNDLE_DETAILS": "جزئیات بسته",
   "TITLE": "عنوان",
   "DESCRIPTION": "توضیحات",
@@ -363,5 +363,11 @@
   "TRANSFER_COMMISSION_ADDED_SUCCESSFULLY": "درخواست انتقال کمیسیون با موفقیت ثبت شد",
   "FAILED_TO_ADD_TRANSFER_COMMISSION": "افزودن انتقال کمیسیون ناموفق بود",
   "USE_ALL": " / همه",
-  "AMOUNT_EXCEEDS_BALANCE": "مبلغ نمی‌تواند بیشتر از موجودی باشد"
+  "AMOUNT_EXCEEDS_BALANCE": "مبلغ نمی‌تواند بیشتر از موجودی باشد",
+  "CONTACT_US_VIA_WHATSAPP": "از طریق واتساپ با ما تماس بگیرید",
+  "CONTACT_US_MESSAGE": "سلام، می‌خواهم اطلاعات بیشتری در مورد خدمات شما دریافت کنم",
+  "WHATSAPP_CARD_MESSAGE": "سلام، به کمک در مورد خدمات شما نیاز دارم",
+  "SUCCESSFUL": "موفق ✅",
+  "COMPLETED": "تکمیل شد ✅",
+  "FAILED": "ناموفق ❌"
 }

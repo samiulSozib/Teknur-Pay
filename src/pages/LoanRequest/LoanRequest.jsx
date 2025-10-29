@@ -253,7 +253,7 @@ export const LoanRequest = () => {
                 {/* Pagination Controls - Same as Order component */}
 
                 <div className="flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4 mt-6">
-                    {/* Rows per page selection */}
+                    {/* {t("ROWS_PER_PAGE")} selection */}
                     <div className="flex items-center space-x-2 text-gray-600">
                         <span>{t("ROWS_PER_PAGE")}:</span>
                         <select
@@ -261,7 +261,6 @@ export const LoanRequest = () => {
                             onChange={(e) => setRowsPerPage(+e.target.value)}
                             className="p-1 min-w-[60px] text-gray-700"
                         >
-                            <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={20}>20</option>
                         </select>

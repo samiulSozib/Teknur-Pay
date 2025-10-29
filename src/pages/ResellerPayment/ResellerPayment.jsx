@@ -755,26 +755,27 @@ export const ResellerPayment = () => {
             <div
               ref={modalRef}
               className={`border ${
-                selectedPayment.status === "failed"
+                selectedPayment.status == "failed"
                   ? "border-red-500"
-                  : selectedPayment.status === "completed"
+                  : selectedPayment.status == "completed"
                   ? "border-green-500"
                   : "border-yellow-500"
               } rounded-md flex flex-col gap-3`}
             >
               {/* Status Image */}
-              <div className="flex items-center justify-center mt-3">
+              <div className="flex flex-col items-center justify-center mt-3">
                 <img
                   src={
-                    selectedPayment.status === "pending"
-                      ? "/images/img/Pending.png"
-                      : selectedPayment.status === "completed"
-                      ? "/images/img/Success.png"
-                      : "/images/img/Unsuccess.png"
+                    selectedPayment.status == "pending"
+                      ? "/images/img/pending_image.png"
+                      : selectedPayment.status == "completed"
+                      ? "/images/img/success_image.png"
+                      : "/images/img/red_cancel_icon.png"
                   }
                   alt=""
                   className="w-[70px] h-[70px] object-contain"
                 />
+                <span>{selectedPayment.status=="pending"?t('PENDING'):selectedPayment.status=="completed"?t('COMPLETED'):t('FAILED')}</span>
               </div>
 
               {/* Payment Images Preview */}
