@@ -52,7 +52,7 @@ export default function UserDropdown() {
       >
         <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
         <img
-          src={user_info?.reseller?.profile_image_url|| "/images/avatar.png"}
+          src={user_info?.reseller?.profile_image_url|| "/images/img/avatar.png"}
           alt="Avatar"
           className="w-10 h-10 rounded-full"
           onError={(e) => e.target.src = "/public/images/img/avatar.png"} 
