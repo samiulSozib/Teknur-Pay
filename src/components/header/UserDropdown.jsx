@@ -55,7 +55,7 @@ export default function UserDropdown() {
           src={user_info?.reseller?.profile_image_url|| "/images/img/avatar.png"}
           alt="Avatar"
           className="w-10 h-10 rounded-full"
-          onError={(e) => e.target.src = "/public/images/img/avatar.png"} 
+          onError={(e) => e.target.src = "/images/img/avatar.png"} 
         />
 
 
