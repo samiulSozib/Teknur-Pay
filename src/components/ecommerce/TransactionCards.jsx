@@ -8,37 +8,37 @@ export default function TransactionCards() {
     {
       label: t("PAYMENT_RECEIPT_REQUEST"),
       color: "bg-blue-400 hover:bg-blue-400",
-      icon:"/public/assets/icons/wallet.png",
+      icon:"/assets/icons/wallet.png",
       link: "/reseller-payments"
     },
     {
       label: t("REQUEST_LOAN_BALANCE"),
       color: "bg-green-400 hover:bg-green-400",
-      icon:"/public/assets/icons/transactionsicon.png",
+      icon:"/assets/icons/transactionsicon.png",
       link: "/loan-requests"
     },
     {
       label: t("MONEY_EXCHANGE"),
       color: "bg-purple-400 hover:bg-purple-400",
-      icon:"/public/assets/icons/exchange.png",
+      icon:"/assets/icons/exchange.png",
       link: "/hawala-orders", 
     },
     {
       label: t("MONEY_EXCHANGE_RATES"),
       color: "bg-orange-400 hover:bg-orange-400",
-      icon:"/public/assets/icons/exchange-rate.png",
+      icon:"/assets/icons/exchange-rate.png",
       link: "/money-exchnage-rate"
     },
     {
       label: t("BALANCE_TRANSACTION"),
       color: "bg-pink-400 hover:bg-pink-400",
-      icon:"/public/assets/icons/transactionsicon.png",
+      icon:"/assets/icons/transactionsicon.png",
       link: "/transactions"
     },
     {
       label: t("TRANSFER_COMMISSION_TO_BALANCE"),
       color: "bg-teal-400 hover:bg-teal-400",
-      icon:"/public/assets/icons/transactionsicon.png",
+      icon:"/assets/icons/transactionsicon.png",
       link: "/transfer-commissions"
     },
   ];
