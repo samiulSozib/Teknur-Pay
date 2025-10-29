@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Fixed incorrect import
+import { Link, useNavigate } from "react-router-dom";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { signIn } from "../../redux/actions/authAction"; // If using aliases
+import { signIn } from "../../redux/actions/authAction";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -53,13 +53,27 @@ export default function SignInForm() {
     <div className="flex flex-col flex-1">
       
       <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
+        {/* TekNur Pay Logo for Small Screens */}
+        <div className="block mb-6 lg:hidden">
+          <div className="flex justify-center">
+            <Link to="/">
+              <img
+                src="/images/img/teknur_pay.png"
+                alt="TekNur Pay"
+                className="w-40 h-40 rounded-md"
+              />
+            </Link>
+          </div>
+          
+        </div>
+
         <div>
           <div className="mb-5 sm:mb-8">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
               {t("SIGN_IN")}
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-            {t("ENTER_YOUR_EMAIL_AND_PASSWORD_TO_SIGN_IN")}
+              {t("ENTER_YOUR_EMAIL_AND_PASSWORD_TO_SIGN_IN")}
             </p>
           </div>
           <form onSubmit={formik.handleSubmit}>
@@ -131,7 +145,6 @@ export default function SignInForm() {
                   disabled={loading}
                 >
                   {loading ? t('SIGNING_IN') : t('SIGN_IN')}
-
                 </Button>
               </div>
             </div>
