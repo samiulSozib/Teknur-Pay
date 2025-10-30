@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
@@ -9,6 +9,8 @@ import {placeOrder,confirmPin,clearMessages, customRecharge} from '../../redux/a
 import { getCountries } from "../../redux/actions/locationAction";
 import { toast } from "react-toastify";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb"
+import html2canvas from "html2canvas";
+
 
 
 
@@ -79,6 +81,64 @@ export default function CreditRecharge() {
     }
 
 }, [ dispatch,countries,phoneNumberLength,countryId]);
+
+  const modalRef = useRef(null);
+
+  const handleShare = async () => {
+    if (modalRef.current) {
+      try {
+        const canvas = await html2canvas(modalRef.current);
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const file = new File([blob], "order_details.png", {
+              type: "image/png",
+            });
+            const data = {
+              files: [file],
+              title: "Order Details",
+              text: "Check out this order details!",
+            };
+            if (navigator.canShare && navigator.canShare(data)) {
+              navigator.share(data).catch((error) => {
+                console.error("Sharing failed:", error);
+                alert("Sharing failed. Please try again.");
+              });
+            } else {
+              alert("Sharing is not supported in this browser.");
+            }
+          }
+        });
+      } catch (error) {
+        console.error("Error capturing modal content:", error);
+        alert("Failed to capture modal content. Please try again.");
+      }
+    }
+  };
+
+   const handleDownload = () => {
+    // Ensure the page or modal content has the correct RTL direction
+    const canvasParent = modalRef.current;
+    canvasParent.style.direction = "rtl"; // Force RTL direction for correct Arabic rendering
+
+    html2canvas(canvasParent, {
+      useCORS: true, // Enable CORS to load external resources
+      allowTaint: true, // Allow tainting of external resources
+      backgroundColor: null, // Keep the background transparent
+      textRendering: "geometricPrecision", // Improve text rendering quality
+      logging: true, // Enable logging for debugging issues
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+
+      // Debugging: To inspect the canvas content in the console
+      //console.log(canvas);
+
+      // Create a link to download the image
+      const link = document.createElement("a");
+      link.href = imgData;
+      link.download = `${selectedOrder.rechargeble_account}.png`; // Filename for the image
+      link.click(); // Trigger download
+    });
+  };
 
 const handleNumberChange = (e) => {
   const value = e.target.value;
@@ -361,7 +421,7 @@ const handleRecharge=()=>{
             <div onClick={()=>handleClickOpen(order)} className="bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
               <div className="flex items-center space-x-3">
                 <img className="w-12 h-12 rounded" src={order?.bundle?.service?.company?.company_logo} alt={order?.bundle?.service?.company?.name} />
-                <div>
+                <div className="pr-2">
                   <p className="text-sm font-medium">{t('ORDER_ID')}: #({order.id})</p>
                   <p className="text-xs text-gray-500">{order.rechargeble_account}</p>
                 </div>
@@ -451,67 +511,124 @@ const handleRecharge=()=>{
 
       </div>
       {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-[90%] md:w-[80%] lg:w-80 text-left m-2">
-          <div className={`border ${selectedOrder.status === 2 ? "border-red-500" : selectedOrder.status === 1 ? "border-green-500" : "border-yellow-500"} rounded-md flex flex-col gap-3`}>
-
-              <div className="flex flex-col items-center justify-center mt-3">
-                <img src={selectedOrder.status==0?'/images/img/pending_image.png':selectedOrder.status==1?"/images/img/success_image.png":"/images/img/red_cancel_icon.png"} alt="" className="w-[70px] h-[70px] object-contain"/>
-                <span>{selectedOrder.status==0?t('PENDING'):selectedOrder.status==1?t('SUCCESSFUL'):t('REJECTED')}</span>
+            <div
+              ref={modalRef}
+              className={`border ${selectedOrder.status == 2
+                ? "border-red-500"
+                : selectedOrder.status == 1
+                  ? "border-green-500"
+                  : "border-yellow-500"
+                } rounded-md flex flex-col gap-3`}
+            >
+              <div className="flex flex-col items-center justify-center bg-blue-50 pb-3">
+                <img
+                  src="/images/img/teknur_pay.png"
+                  alt=""
+                  className="w-[80px] h-[80px] object-contain py-3"
+                />
+                <span>{selectedOrder.status == 0 ? t('PENDING') : selectedOrder.status == 1 ? t('SUCCESSFUL') : t('REJECTED')}</span>
               </div>
 
               <div className="flex flex-col gap-2 p-3">
-                <div className="flex flex-row justify-between">
-                  <span className="text-gray-400 text-sm">{t("BUNDLE_TITLE")}</span>
-                  <span className="text-black text-sm">{selectedOrder.bundle.bundle_title}</span>
+                <div className="flex flex-row justify-between items-center">
+                    <img
+                      src={selectedOrder?.bundle.service.company.company_logo}
+                      alt="Logo"
+                      className="h-12 w-12 rounded-lg object-contain"
+                    />
+                    <span className="text-gray-400 text-sm">
+                      {selectedOrder.bundle.bundle_title}
+                    </span>
+                  
                 </div>
+                <hr />
                 <div className="flex flex-row justify-between">
-                  <span className="text-gray-400 text-sm">{t("PHONE_NUMBER")}</span>
-                  <span className="text-black text-sm">{selectedOrder.rechargeble_account}</span>
+                  <span className="text-gray-400 text-sm">
+                    {t("ORDER_ID")}
+                  </span>
+                  <span className="text-black text-sm">
+                    <span>{t('ID: ')}</span>{selectedOrder.id}
+                  </span>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <span className="text-gray-400 text-sm">{t("VALIDITY")}</span>
-                  <span className="text-black text-sm">{(selectedOrder?.bundle?.validity_type)?.toUpperCase()}</span>
+
+                <div className="flex items-center justify-between w-full text-gray-600 text-sm">
+                  <span className="font-medium">{t("DATE")}</span>
+                  <span className="font-semibold text-gray-800">
+                    {new Date(selectedOrder?.created_at).toLocaleDateString()}
+                  </span>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <span className="text-gray-400 text-sm">{t("ORDER_ID")}</span>
-                  <span className="text-black text-sm">{user_info?.currency?.code} {selectedOrder.bundle.selling_price}</span>
+
+                <div className="flex items-center justify-between w-full text-gray-600 text-sm">
+                  <span className="font-medium">{t("TIME")}</span>
+                  <span className="font-semibold text-gray-800">
+                    {new Date(selectedOrder?.created_at).toLocaleTimeString()}
+                  </span>
                 </div>
+
               </div>
 
-              <div className={`${selectedOrder.status === 2? "bg-red-100 border-red-500": selectedOrder.status === 1? "bg-green-100 border-green-500": "bg-yellow-100 border-yellow-500"} border rounded-lg p-3 flex items-center m-3`}>
+              <div
+                className="bg-blue-50 p-3 flex items-center"
+              >
                 {/* Icon on the Left */}
-                <img 
-                  src={selectedOrder?.bundle.service.company.company_logo} 
-                  alt="Logo" 
-                  className="h-12 w-12 rounded-lg object-contain"
-                />
+
 
                 {/* Date & Time Section */}
-                <div className="flex flex-col ml-3 w-full">
-                  <div className="flex items-center justify-between w-full text-gray-600 text-sm">
-                    <span className="font-medium">{t("DATE")}</span>
-                    <span className="font-semibold text-gray-800">{new Date(selectedOrder?.created_at).toLocaleDateString()}</span>
+                <div className="flex flex-col w-full">
+
+                  <div className="flex flex-row justify-between">
+                    <span className="text-gray-400 text-sm">
+                      {t("PHONE_NUMBER")}
+                    </span>
+                    <span className="text-black text-sm">
+                      {selectedOrder.rechargeble_account}
+                    </span>
                   </div>
-                  
-                  <div className="flex items-center justify-between w-full text-gray-600 text-sm mt-1">
-                    <span className="font-medium">{t("TIME")}</span>
-                    <span className="font-semibold text-gray-800">{new Date(selectedOrder?.created_at).toLocaleTimeString()}</span>
+                  <div className="flex flex-row justify-between">
+                    <span className="text-gray-400 text-sm">
+                      {t("SENDER")}
+                    </span>
+                    <span className="text-black text-sm">
+                      {selectedOrder.performed_by_name}
+                    </span>
+                  </div>
+                  <div className="flex flex-row justify-between">
+                    <span className="text-gray-400 text-sm">{t("PRICE")}</span>
+                    <span className="text-black text-sm">
+                      {user_info?.currency?.code}{" "}
+                      {selectedOrder.bundle.selling_price}
+                    </span>
                   </div>
                 </div>
-              </div>
 
+              </div>
             </div>
 
             <div className="flex flex-row gap-3 justify-between items-center">
-              <button className="rounded-[50px] bg-blue-700 m-3 px-5 py-2 w-[120px] text-white text-center">{t("SHARE")}</button>
-              <button className="rounded-[50px] bg-white m-3 px-5 py-2 w-[120px] text-blue-700 text-center border-2 border-blue-700">{t("DOWNLOAD")}</button>
+              <button
+                onClick={handleShare}
+                className="rounded-[50px] bg-blue-700 m-3 px-5 py-2 w-[120px] text-white text-center"
+              >
+                {t("SHARE")}
+              </button>
+              <button
+                onClick={handleDownload}
+                className="rounded-[50px] bg-white m-3 px-5 py-2 w-[120px] text-blue-700 text-center border-2 border-blue-700"
+              >
+                {t("DOWNLOAD")}
+              </button>
             </div>
 
             <div className="flex flex-row justify-center">
-              <button onClick={handleClose} className="border-2 border-gray-500 w-full rounded-[50px] py-2 text-black font-bold">{t("CLOSE")}</button>
+              <button
+                onClick={handleClose}
+                className="border-2 border-gray-500 w-full rounded-[50px] py-2 text-black font-bold"
+              >
+                {t("CLOSE")}
+              </button>
             </div>
-
           </div>
         </div>
       )}

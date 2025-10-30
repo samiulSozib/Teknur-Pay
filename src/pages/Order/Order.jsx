@@ -261,22 +261,20 @@ export default function Order() {
                 className="cursor-pointer col-span-1 mb-3"
               >
                 <div
-                  className={`flex gap-1  flex-col bg-white shadow-md rounded-lg border ${
-                    order.status == 2
-                      ? "border-red-500"
-                      : order.status == 1
+                  className={`flex gap-1  flex-col bg-white shadow-md rounded-lg border ${order.status == 2
+                    ? "border-red-500"
+                    : order.status == 1
                       ? "border-yellow-300"
                       : "border-green-500"
-                  } p-2`}
+                    } p-2`}
                 >
                   <div
-                    className={`${
-                      order.status == 2
-                        ? "bg-red-500"
-                        : order.status == 1
+                    className={`${order.status == 2
+                      ? "bg-red-500"
+                      : order.status == 1
                         ? "bg-green-500"
                         : "bg-yellow-500"
-                    } font-medium text-white flex flex-row justify-between items-center rounded-t-md px-2 py-1`}
+                      } font-medium text-white flex flex-row justify-between items-center rounded-t-md px-2 py-1`}
                   >
                     <span>
                       {t("ORDER_ID")} (# {order.id})
@@ -313,19 +311,18 @@ export default function Order() {
                       {t("TRANSACTION_STATUS")}
                     </span>
                     <div
-                      className={`${
-                        order.status == 2
-                          ? "bg-red-500"
-                          : order.status == 1
+                      className={`${order.status == 2
+                        ? "bg-red-500"
+                        : order.status == 1
                           ? "bg-green-500"
                           : "bg-yellow-500"
-                      } font-medium text-white flex flex-row justify-between items-center rounded-md px-2 py-1`}
+                        } font-medium text-white flex flex-row justify-between items-center rounded-md px-2 py-1`}
                     >
                       {order.status == 2
                         ? "Rejected"
                         : order.status == 1
-                        ? "Successful"
-                        : "Pending"}
+                          ? "Successful"
+                          : "Pending"}
                     </div>
                   </div>
 
@@ -369,11 +366,10 @@ export default function Order() {
           {/* Navigation buttons */}
           <div className="flex items-center space-x-2">
             <button
-              className={`p-2 ${
-                page === 1
-                  ? "text-gray-300"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
+              className={`p-2 ${page === 1
+                ? "text-gray-300"
+                : "text-gray-500 hover:text-gray-700"
+                }`}
               onClick={goToPreviousPage}
               disabled={page === 1}
             >
@@ -393,11 +389,10 @@ export default function Order() {
               </svg>
             </button>
             <button
-              className={`p-2 ${
-                page === total_pages
-                  ? "text-gray-300"
-                  : "text-gray-700 hover:text-gray-900"
-              }`}
+              className={`p-2 ${page === total_pages
+                ? "text-gray-300"
+                : "text-gray-700 hover:text-gray-900"
+                }`}
               onClick={goToNextPage}
               disabled={page === total_pages}
             >
@@ -426,93 +421,100 @@ export default function Order() {
           <div className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-[90%] md:w-[80%] lg:w-80 text-left m-2">
             <div
               ref={modalRef}
-              className={`border ${
-                selectedOrder.status == 2
-                  ? "border-red-500"
-                  : selectedOrder.status == 1
+              className={`border ${selectedOrder.status == 2
+                ? "border-red-500"
+                : selectedOrder.status == 1
                   ? "border-green-500"
                   : "border-yellow-500"
-              } rounded-md flex flex-col gap-3`}
+                } rounded-md flex flex-col gap-3`}
             >
-              <div className="flex flex-col items-center justify-center mt-3">
+              <div className="flex flex-col items-center justify-center bg-blue-50 pb-3">
                 <img
-                  src={
-                    selectedOrder.status == 0
-                      ? "/images/img/pending_image.png"
-                      : selectedOrder.status == 1
-                      ? "/images/img/success_image.png"
-                      : "/images/img/red_cancel_icon.png"
-                  }
+                  src="/images/img/teknur_pay.png"
                   alt=""
-                  className="w-[70px] h-[70px] object-contain"
+                  className="w-[80px] h-[80px] object-contain py-3"
                 />
-                <span>{selectedOrder.status==0?t('PENDING'):selectedOrder.status==1?t('SUCCESSFUL'):t('REJECTED')}</span>
+                <span>{selectedOrder.status == 0 ? t('PENDING') : selectedOrder.status == 1 ? t('SUCCESSFUL') : t('REJECTED')}</span>
               </div>
 
               <div className="flex flex-col gap-2 p-3">
                 <div className="flex flex-row justify-between">
-                  <span className="text-gray-400 text-sm">
-                    {t("BUNDLE_TITLE")}
-                  </span>
-                  <span className="text-black text-sm">
-                    {selectedOrder.bundle.bundle_title}
-                  </span>
+                  <div className="flex flex-row justify-start items-center">
+                    <img
+                      src={selectedOrder?.bundle.service.company.company_logo}
+                      alt="Logo"
+                      className="h-12 w-12 rounded-lg object-contain"
+                    />
+                    <span className="text-gray-400 text-sm">
+                      {selectedOrder.bundle.bundle_title}
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="text-black text-sm">
+                      {selectedOrder?.bundle?.validity_type?.toUpperCase()}
+                    </span>
+                  </div>
                 </div>
+                <hr />
                 <div className="flex flex-row justify-between">
                   <span className="text-gray-400 text-sm">
-                    {t("PHONE_NUMBER")}
+                    {t("ORDER_ID")}
                   </span>
                   <span className="text-black text-sm">
-                    {selectedOrder.rechargeble_account}
+                    <span>{t('ID: ')}</span>{selectedOrder.id}
                   </span>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <span className="text-gray-400 text-sm">{t("VALIDITY")}</span>
-                  <span className="text-black text-sm">
-                    {selectedOrder?.bundle?.validity_type?.toUpperCase()}
+
+                <div className="flex items-center justify-between w-full text-gray-600 text-sm">
+                  <span className="font-medium">{t("DATE")}</span>
+                  <span className="font-semibold text-gray-800">
+                    {new Date(selectedOrder?.created_at).toLocaleDateString()}
                   </span>
                 </div>
-                <div className="flex flex-row justify-between">
-                  <span className="text-gray-400 text-sm">{t("ORDER_ID")}</span>
-                  <span className="text-black text-sm">
-                    {user_info?.currency?.code}{" "}
-                    {selectedOrder.bundle.selling_price}
+
+                <div className="flex items-center justify-between w-full text-gray-600 text-sm">
+                  <span className="font-medium">{t("TIME")}</span>
+                  <span className="font-semibold text-gray-800">
+                    {new Date(selectedOrder?.created_at).toLocaleTimeString()}
                   </span>
                 </div>
+
               </div>
 
               <div
-                className={`${
-                  selectedOrder.status === 2
-                    ? "bg-red-100 border-red-500"
-                    : selectedOrder.status === 1
-                    ? "bg-green-100 border-green-500"
-                    : "bg-yellow-100 border-yellow-500"
-                } border rounded-lg p-3 flex items-center m-3`}
+                className="bg-blue-50 p-3 flex items-center"
               >
                 {/* Icon on the Left */}
-                <img
-                  src={selectedOrder?.bundle.service.company.company_logo}
-                  alt="Logo"
-                  className="h-12 w-12 rounded-lg object-contain"
-                />
+
 
                 {/* Date & Time Section */}
-                <div className="flex flex-col ml-3 w-full">
-                  <div className="flex items-center justify-between w-full text-gray-600 text-sm">
-                    <span className="font-medium">{t("DATE")}</span>
-                    <span className="font-semibold text-gray-800">
-                      {new Date(selectedOrder?.created_at).toLocaleDateString()}
+                <div className="flex flex-col w-full">
+
+                  <div className="flex flex-row justify-between">
+                    <span className="text-gray-400 text-sm">
+                      {t("PHONE_NUMBER")}
+                    </span>
+                    <span className="text-black text-sm">
+                      {selectedOrder.rechargeble_account}
                     </span>
                   </div>
-
-                  <div className="flex items-center justify-between w-full text-gray-600 text-sm mt-1">
-                    <span className="font-medium">{t("TIME")}</span>
-                    <span className="font-semibold text-gray-800">
-                      {new Date(selectedOrder?.created_at).toLocaleTimeString()}
+                  <div className="flex flex-row justify-between">
+                    <span className="text-gray-400 text-sm">
+                      {t("SENDER")}
+                    </span>
+                    <span className="text-black text-sm">
+                      {selectedOrder.performed_by_name}
+                    </span>
+                  </div>
+                  <div className="flex flex-row justify-between">
+                    <span className="text-gray-400 text-sm">{t("PRICE")}</span>
+                    <span className="text-black text-sm">
+                      {user_info?.currency?.code}{" "}
+                      {selectedOrder.bundle.selling_price}
                     </span>
                   </div>
                 </div>
+
               </div>
             </div>
 

@@ -22,7 +22,8 @@ export default function BundlePage() {
   const queryParams = new URLSearchParams(location.search);
   const countryId = queryParams.get('countryId');
   const categoryId = queryParams.get('categoryId');
-  const categoryName=queryParams.get('categoryName')
+  const categoryName = queryParams.get('categoryName')
+  const type = queryParams.get("type")
 
   const dispatch = useDispatch()
   const { serviceList } = useSelector((state) => state.serviceListReducer)
@@ -49,11 +50,11 @@ export default function BundlePage() {
   useEffect(() => {
     // Set loading state when component mounts
     setIsLoading(true);
-    
+
     dispatch(getServices(categoryId, countryId))
     dispatch(getBundles(page, rowsPerPage, countryId, validity, companyId, categoryId, searchTag))
     dispatch(getCountries())
-    
+
     // Set a 2-second timeout to hide the loading spinner
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -73,6 +74,7 @@ export default function BundlePage() {
   ];
 
   const filteredServiceList = useMemo(() => {
+    if (type=="social") return serviceList;
     if ((number.length < 3 && number.length >= 0)) return serviceList; // Return all services if no companyId is set
     return serviceList.filter(service => service.company.id === companyId);
   }, [companyId, serviceList, number.length]);
@@ -275,28 +277,45 @@ export default function BundlePage() {
             </div>
 
             <div className="relative">
-              <Input
-                value={number}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value.length <= phoneNumberLength) {
-                    handleNumberChange(e);
-                  }
-                }}
-                type="text"
-                inputMode="numeric"
-                pattern="[0-9]*"
-                error={phoneNumberError}
-                hint={phoneNumberError}
-                placeholder={t("ENTER_YOUR_NUMBER")}
-                helperText={phoneNumberError}
-                required
-                inputProps={{
-                  min: 0,
-                }}
-                className={`h-11 rounded-lg border ${phoneNumberError ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${phoneNumberError ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'
-                  } dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
-              />
+              {type == "social" && (
+                <Input
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                  type="number"
+                  placeholder={t("ENTER_YOUR_NUMBER")}
+                  required
+                  inputProps={{
+                    min: 0,
+                  }}
+                  className={`h-11 rounded-lg border border-gray-200' bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring focus:border-brand-300 focus:ring-brand-500/10'
+                dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                />
+              )}
+              {type == "nonsocial" && (
+                <Input
+                  value={number}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length <= phoneNumberLength) {
+                      handleNumberChange(e);
+                    }
+                  }}
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  error={phoneNumberError}
+                  hint={phoneNumberError}
+                  placeholder={t("ENTER_YOUR_NUMBER")}
+                  helperText={phoneNumberError}
+                  required
+                  inputProps={{
+                    min: 0,
+                  }}
+                  className={`h-11 rounded-lg border ${phoneNumberError ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${phoneNumberError ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'
+                    } dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                />
+              )}
+
               <span className="absolute left-0 top-0 flex h-11 w-[46px] items-center justify-center border-r border-gray-200 dark:border-gray-800">
                 <Dialpad className="h-6 w-6" />
               </span>
@@ -367,9 +386,9 @@ export default function BundlePage() {
                       <div className="flex flex-row justify-between items-center">
                         <span className="text-[12px] font-semibold text-red-600">{t('BUY')} : {bundle.buying_price} <span className="text-[10px]">{user_info?.currency?.code}</span></span>
                         <span className="text-[12px] font-semibold text-green-600">{t('SELL')} : {bundle.selling_price} <span className="text-[10px]">{user_info?.currency?.code}</span></span>
-                        
+
                       </div>
-                      
+
                     </div>
                   </div>
                 ))}
@@ -451,28 +470,43 @@ export default function BundlePage() {
                 <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">
                   <Dialpad className="h-[24px] w-[24px]" />
                 </span>
-
-                <Input
-                  value={number}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value.length <= phoneNumberLength) {
-                      handleNumberChange(e);
-                    }
-                  }}
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  error={Boolean(phoneNumberError)}
-                  hint={phoneNumberError}
-                  placeholder={t("ENTER_YOUR_NUMBER")}
-                  helperText={phoneNumberError}
-                  required
-                  inputProps={{
-                    min: 0,
-                  }}
-                  className={`rounded-lg border ${phoneNumberError ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${phoneNumberError ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
-                />
+                {type == "social" && (
+                  <Input
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
+                    type="number"
+                    placeholder={t("ENTER_YOUR_NUMBER")}
+                    required
+                    inputProps={{
+                      min: 0,
+                    }}
+                    className={`h-11 rounded-lg border border-gray-200' bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring focus:border-brand-300 focus:ring-brand-500/10'
+                dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                  />
+                )}
+                {type == "nonsocial" && (
+                  <Input
+                    value={number}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value.length <= phoneNumberLength) {
+                        handleNumberChange(e);
+                      }
+                    }}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    error={Boolean(phoneNumberError)}
+                    hint={phoneNumberError}
+                    placeholder={t("ENTER_YOUR_NUMBER")}
+                    helperText={phoneNumberError}
+                    required
+                    inputProps={{
+                      min: 0,
+                    }}
+                    className={`rounded-lg border ${phoneNumberError ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${phoneNumberError ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                  />
+                )}
               </div>
               <div className="relative">
                 <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">

@@ -456,15 +456,9 @@ export default function HawalaOrders() {
             >
               <div className="flex flex-col items-center justify-center mt-3">
                 <img
-                  src={
-                    selectedOrder.status == "pending"
-                      ? "/images/img/pending_image.png"
-                      : selectedOrder.status == "confirmed"
-                      ? "/images/img/success_image.png"
-                      : "/images/img/red_cancel_icon.png"
-                  }
+                  src="/images/img/teknur_pay.png"
                   alt=""
-                  className="w-[70px] h-[70px] object-contain"
+                  className="w-[60px] h-[60px] object-contain"
                 />
                 <span>{selectedOrder.status=="pending"?t('PENDING'):selectedOrder.status=="confirmed"?t('SUCCESSFUL'):t('CANCELLED')}</span>
               </div>
@@ -472,7 +466,7 @@ export default function HawalaOrders() {
               <div className="flex flex-col gap-2 p-3">
                 <div className="flex flex-row justify-between">
                   <span className="text-gray-400 text-sm">
-                    {t("BUNDLE_TITLE")}
+                    {t("HAWALA_NUMBER")}
                   </span>
                   <span className="text-black text-sm">
                     {selectedOrder.hawala_number}
