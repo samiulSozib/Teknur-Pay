@@ -369,5 +369,13 @@
   "WHATSAPP_CARD_MESSAGE": "سلام، به کمک در مورد خدمات شما نیاز دارم",
   "SUCCESSFUL": "موفق ✅",
   "COMPLETED": "تکمیل شد ✅",
-  "FAILED": "ناموفق ❌"
+  "FAILED": "ناموفق ❌",
+  "CONFIRM_CANCELLATION": "تأیید لغو",
+  "ARE_YOU_SURE_CANCEL_ORDER": "آیا مطمئن هستید که می‌خواهید این سفارش را لغو کنید؟",
+  "YES_CANCEL": "بله، لغو شود!",
+  "ORDER_CANCELLED_SUCCESSFULLY": "سفارش با موفقیت لغو شد",
+  "FAILED_TO_CANCEL_ORDER": "لغو سفارش انجام نشد",
+  "ALREADY_CANCELLED": "قبلاً لغو شده",
+  "CANNOT_CANCEL_CONFIRMED": "امکان لغو سفارش تأیید شده وجود ندارد",
+  "CANCEL_ORDER": "لغو سفارش"
 }

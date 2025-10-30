@@ -369,6 +369,14 @@
   "WHATSAPP_CARD_MESSAGE": "سلام، زه ستاسو د خدماتو په اړه مرسته ته اړتیا لرم",
   "SUCCESSFUL": "بریالی ✅",
   "COMPLETED": "بشپړ شو ✅",
-  "FAILED": "ناکام ❌"
+  "FAILED": "ناکام ❌",
+   "CONFIRM_CANCELLATION": "د لغوه کیدو تایید",
+  "ARE_YOU_SURE_CANCEL_ORDER": "آیا تاسې ډاډه یاست چې غواړئ دا امر لغوه کړئ؟",
+  "YES_CANCEL": "هو، لغوه یې کړئ!",
+  "ORDER_CANCELLED_SUCCESSFULLY": "امر په بریالیتوب سره لغوه شو",
+  "FAILED_TO_CANCEL_ORDER": "د امر لغوه کول ناکام شول",
+  "ALREADY_CANCELLED": "مخکې لغوه شوی",
+  "CANNOT_CANCEL_CONFIRMED": "تایید شوی امر نشئ لغوه کولی",
+  "CANCEL_ORDER": "امر لغوه کول"
 
 }
