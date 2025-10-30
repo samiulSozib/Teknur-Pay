@@ -529,6 +529,7 @@ const handleRecharge=()=>{
                   className="w-[80px] h-[80px] object-contain py-3"
                 />
                 <span>{selectedOrder.status == 0 ? t('PENDING') : selectedOrder.status == 1 ? t('SUCCESSFUL') : t('REJECTED')}</span>
+                <span className="text-red-500">{selectedOrder.status==2?selectedOrder.reject_reason:''}</span>
               </div>
 
               <div className="flex flex-col gap-2 p-3">

@@ -74,7 +74,7 @@ export default function BundlePage() {
   ];
 
   const filteredServiceList = useMemo(() => {
-    if (type=="social") return serviceList;
+    if (type == "social") return serviceList;
     if ((number.length < 3 && number.length >= 0)) return serviceList; // Return all services if no companyId is set
     return serviceList.filter(service => service.company.id === companyId);
   }, [companyId, serviceList, number.length]);
@@ -115,7 +115,7 @@ export default function BundlePage() {
       const matchedService = serviceList.find(service =>
         service.company.companycodes.some(code => prefix.startsWith(code.reserved_digit))
       );
-
+      console.log(matchedService)
       if (!matchedService) {
         toast.error("Invalid Phone")
         return;
@@ -196,26 +196,73 @@ export default function BundlePage() {
     } else if (value.length === phoneNumberLength) {
       setPhoneNumberError("");  // Clear error if length is correct
     }
-    else if (value.length >= 3) {
-      const prefix = value.substring(0, 3);
-      const matchedService = serviceList.find(service =>
-        service.company.companycodes.some(code => prefix.startsWith(code.reserved_digit))
-      );
+    // else if (value.length >= 3) {
+    //   const prefix = value.substring(0, 4);
+    //   const matchedService = serviceList.find(service =>
+    //     service?.company?.companycodes.some(code => prefix.startsWith(code.reserved_digit))
+    //   );
+    //   console.log(serviceList)
+    //   console.log(matchedService)
+    //   console.log(selectedBundle?.service?.company_id)
 
-      if (selectedBundle) {
-        if (matchedService.company.id !== selectedBundle.service.company_id) {
-          setPhoneNumberError("Invalid Phone")
-        } else {
-          setPhoneNumberError("")
+    //   if (selectedBundle) {
+    //     if (matchedService?.company?.id != selectedBundle?.service?.company_id) {
+    //       console.log(matchedService?.company?.id != selectedBundle?.service?.company_id)
+    //       setPhoneNumberError("Invalid Phone")
+    //     } else {
+    //       setPhoneNumberError("")
+    //     }
+    //   }
+
+    //   else if (!matchedService) {
+    //     setPhoneNumberError("Invalid Phone")
+    //   } else {
+    //     setPhoneNumberError("");
+    //     setCompanyId(matchedService.company.id);
+    //   }
+    // } 
+    else if (value.length >= 3) {
+      let matchedService = null;
+      let matchedPrefix = "";
+
+      // Find the service that matches the longest possible prefix
+      for (const service of serviceList) {
+        if (service?.company?.companycodes) {
+          for (const code of service.company.companycodes) {
+            const reservedLength = code.reserved_digit?.length || 0;
+            if (reservedLength > 0 && value.length >= reservedLength) {
+              const prefix = value.substring(0, reservedLength);
+              if (prefix === code.reserved_digit) {
+                // Prefer the longest matching prefix
+                if (!matchedService || reservedLength > matchedPrefix.length) {
+                  matchedService = service;
+                  matchedPrefix = code.reserved_digit;
+                }
+              }
+            }
+          }
         }
       }
-      else if (!matchedService) {
-        setPhoneNumberError("Invalid Phone")
+
+      // console.log(serviceList);
+      // console.log(matchedService);
+      // console.log(selectedBundle?.service?.company_id);
+
+      if (selectedBundle) {
+        if (matchedService?.company?.id != selectedBundle?.service?.company_id) {
+          console.log(matchedService?.company?.id != selectedBundle?.service?.company_id);
+          setPhoneNumberError("Invalid Phone");
+        } else {
+          setPhoneNumberError("");
+        }
+      } else if (!matchedService) {
+        setPhoneNumberError("Invalid Phone");
       } else {
         setPhoneNumberError("");
         setCompanyId(matchedService.company.id);
       }
-    } else {
+    }
+    else {
       setCompanyId("");
     }
   };
