@@ -5,6 +5,9 @@ import {
   HAWALA_ORDER_LIST_FAIL,
   HAWALA_ORDER_LIST_REQUEST,
   HAWALA_ORDER_LIST_SUCCESS,
+  HAWALA_ORDER_CANCEL_REQUEST,
+  HAWALA_ORDER_CANCEL_SUCCESS,
+  HAWALA_ORDER_CANCEL_FAIL,
 } from "../constants/hawalaOrderConstant";
 
 const initialState = {
@@ -21,6 +24,8 @@ const initialState = {
 const hawalaOrdersReducer = (state = initialState, action) => {
   switch (action.type) {
     case HAWALA_ORDER_LIST_REQUEST:
+    case ADD_HAWALA_ORDER_REQUEST:
+    case HAWALA_ORDER_CANCEL_REQUEST:
       return {
         ...state,
         loading: true,
@@ -39,17 +44,12 @@ const hawalaOrdersReducer = (state = initialState, action) => {
       };
 
     case HAWALA_ORDER_LIST_FAIL:
+    case ADD_HAWALA_ORDER_FAIL:
+    case HAWALA_ORDER_CANCEL_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
-      };
-
-    case ADD_HAWALA_ORDER_REQUEST:
-      return {
-        ...state,
-        loading: true,
-        error: null,
       };
 
     case ADD_HAWALA_ORDER_SUCCESS:
@@ -60,11 +60,16 @@ const hawalaOrdersReducer = (state = initialState, action) => {
         message: action.payload.message,
       };
 
-    case ADD_HAWALA_ORDER_FAIL:
+    case HAWALA_ORDER_CANCEL_SUCCESS:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        orderList: state.orderList.map(order => 
+          order.id === action.payload.id 
+            ? { ...order, order_status: action.payload.order_status }
+            : order
+        ),
+        message: action.payload.message,
       };
 
     default:

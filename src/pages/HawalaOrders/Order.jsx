@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
 import html2canvas from "html2canvas";
-import { addHawalaOrder, getHawalaOrders } from "../../redux/actions/hawalaOrderAction";
+import { addHawalaOrder, cancelHawalaOrder, getHawalaOrders } from "../../redux/actions/hawalaOrderAction";
 import { Select } from "@material-tailwind/react";
 import AddHawalaDialog from "./AddHawalaDialog";
 import Swal from "sweetalert2";
@@ -180,7 +180,7 @@ export default function HawalaOrders() {
 
   const handleCloseDialog = () => {
     setShowDialog(false);
-    
+
   };
 
 
@@ -190,34 +190,76 @@ export default function HawalaOrders() {
   //   console.log("Form submitted:", formData);
   // };
 
-    const handleSubmitHawalaOrder = async (formData) => {
+  const handleSubmitHawalaOrder = async (formData) => {
+    try {
+      const result = await dispatch(addHawalaOrder(formData));
+
+      // Check for error returned from thunk (if using rejectWithValue or custom return)
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+
+      // ✅ Success alert
+      Swal.fire({
+        title: t("SUCCESS"),
+        text: t("HAWALA_ORDER_PLACED_SUCCESSFULLY"),
+        icon: "success",
+        confirmButtonColor: "#10b981",
+      });
+      dispatch(getHawalaOrders())
+
+    } catch (error) {
+      // ❌ Error alert
+      Swal.fire({
+        title: t("ERROR"),
+        text: error?.message || t("FAILED_TO_PLACED_HAWALA_ORDER"),
+        icon: "error",
+        confirmButtonColor: "#ef4444", // red-500
+      });
+    }
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    // Show confirmation dialog
+    const result = await Swal.fire({
+      title: t("CONFIRM_CANCELLATION"),
+      text: t("ARE_YOU_SURE_CANCEL_ORDER"),
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: t("YES_CANCEL"),
+      cancelButtonText: t("NO")
+    });
+
+    if (result.isConfirmed) {
       try {
-        const result = await dispatch(addHawalaOrder(formData));
-  
-        // Check for error returned from thunk (if using rejectWithValue or custom return)
-        if (result?.error) {
-          throw new Error(result.error);
-        }
-  
-        // ✅ Success alert
+        // Dispatch cancel action
+        await dispatch(cancelHawalaOrder(orderId));
+
+        // Show success message
         Swal.fire({
-          title: t("SUCCESS"),
-          text: t("HAWALA_ORDER_PLACED_SUCCESSFULLY"),
+          title: t("CANCELLED"),
+          text: t("ORDER_CANCELLED_SUCCESSFULLY"),
           icon: "success",
           confirmButtonColor: "#10b981",
         });
-        dispatch(getHawalaOrders())
-  
+
+        // Refresh the orders list
+        dispatch(getHawalaOrders(page, rowsPerPage, filterStatus, ""));
+        setModalOpen(false)
+
       } catch (error) {
-        // ❌ Error alert
+        // Show error message
         Swal.fire({
           title: t("ERROR"),
-          text: error?.message || t("FAILED_TO_PLACED_HAWALA_ORDER"),
+          text: error?.message || t("FAILED_TO_CANCEL_ORDER"),
           icon: "error",
-          confirmButtonColor: "#ef4444", // red-500
+          confirmButtonColor: "#ef4444",
         });
       }
-    };
+    }
+  };
 
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6">
@@ -313,22 +355,20 @@ export default function HawalaOrders() {
                 className="cursor-pointer col-span-1 mb-3"
               >
                 <div
-                  className={`flex gap-1  flex-col bg-white shadow-md rounded-lg border ${
-                    order.status == "cancelled"
+                  className={`flex gap-1  flex-col bg-white shadow-md rounded-lg border ${order.status == "cancelled"
                       ? "border-red-500"
                       : order.status == "pending"
-                      ? "border-yellow-300"
-                      : "border-green-500"
-                  } p-2`}
+                        ? "border-yellow-300"
+                        : "border-green-500"
+                    } p-2`}
                 >
                   <div
-                    className={`${
-                      order.status == "cancelled"
+                    className={`${order.status == "cancelled"
                         ? "bg-red-500"
                         : order.status == "confirmed"
-                        ? "bg-green-500"
-                        : "bg-yellow-500"
-                    } font-medium text-white flex flex-row justify-between items-center rounded-t-md px-2 py-1`}
+                          ? "bg-green-500"
+                          : "bg-yellow-500"
+                      } font-medium text-white flex flex-row justify-between items-center rounded-t-md px-2 py-1`}
                   >
                     <span>
                       {t("HAWALA_NUMBER")} (# {order.hawala_number})
@@ -389,11 +429,10 @@ export default function HawalaOrders() {
           {/* Navigation buttons */}
           <div className="flex items-center space-x-2">
             <button
-              className={`p-2 ${
-                page === 1
+              className={`p-2 ${page === 1
                   ? "text-gray-300"
                   : "text-gray-500 hover:text-gray-700"
-              }`}
+                }`}
               onClick={goToPreviousPage}
               disabled={page === 1}
             >
@@ -413,11 +452,10 @@ export default function HawalaOrders() {
               </svg>
             </button>
             <button
-              className={`p-2 ${
-                page === total_pages
+              className={`p-2 ${page === total_pages
                   ? "text-gray-300"
                   : "text-gray-700 hover:text-gray-900"
-              }`}
+                }`}
               onClick={goToNextPage}
               disabled={page === total_pages}
             >
@@ -446,13 +484,12 @@ export default function HawalaOrders() {
           <div className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-[90%] md:w-[80%] lg:w-80 text-left m-2 overflow-y-auto">
             <div
               ref={modalRef}
-              className={`border ${
-                selectedOrder.status == "cancelled"
+              className={`border ${selectedOrder.status == "cancelled"
                   ? "border-red-500"
                   : selectedOrder.status == "confirmed"
-                  ? "border-green-500"
-                  : "border-yellow-500"
-              } rounded-md flex flex-col gap-3`}
+                    ? "border-green-500"
+                    : "border-yellow-500"
+                } rounded-md flex flex-col gap-3`}
             >
               <div className="flex flex-col items-center justify-center mt-3">
                 <img
@@ -460,7 +497,7 @@ export default function HawalaOrders() {
                   alt=""
                   className="w-[60px] h-[60px] object-contain"
                 />
-                <span>{selectedOrder.status=="pending"?t('PENDING'):selectedOrder.status=="confirmed"?t('SUCCESSFUL'):t('CANCELLED')}</span>
+                <span>{selectedOrder.status == "pending" ? t('PENDING') : selectedOrder.status == "confirmed" ? t('SUCCESSFUL') : t('CANCELLED')}</span>
               </div>
 
               <div className="flex flex-col gap-2 p-3">
@@ -560,8 +597,8 @@ export default function HawalaOrders() {
                     {selectedOrder.commission_paid_by_receiver
                       ? t("RECEIVER")
                       : selectedOrder.paid_by_sender
-                      ? t("SENDER")
-                      : "N/A"}
+                        ? t("SENDER")
+                        : "N/A"}
                   </span>
                 </div>
               </div>
@@ -582,6 +619,21 @@ export default function HawalaOrders() {
               </button>
             </div>
 
+            <div className="flex flex-row justify-center mb-3">
+              <button
+                onClick={() => handleCancelOrder(selectedOrder.id)}
+                disabled={selectedOrder.status === "cancelled" || selectedOrder.status === "confirmed"}
+                className={`w-full rounded-[50px] py-2 font-bold ${selectedOrder.status === "cancelled" || selectedOrder.status === "confirmed"
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-white border-2 border-red-500 text-red-500 hover:bg-red-50"
+                  }`}
+              >
+                {selectedOrder.status === "cancelled" ? t("ALREADY_CANCELLED") :
+                  selectedOrder.status === "confirmed" ? t("CANNOT_CANCEL_CONFIRMED") :
+                    t("CANCEL_ORDER")}
+              </button>
+            </div>
+
             <div className="flex flex-row justify-center">
               <button
                 onClick={handleClose}
@@ -595,7 +647,7 @@ export default function HawalaOrders() {
       )}
 
       {/* Add hawala order  Dialog */}
-     <AddHawalaDialog
+      <AddHawalaDialog
         showDialog={showDialog}
         onClose={handleCloseDialog}
         onSubmit={handleSubmitHawalaOrder}

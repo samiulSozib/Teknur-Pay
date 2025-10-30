@@ -369,5 +369,13 @@
   "SUCCESSFUL": "Successful ✅",
   "COMPLETED": "Completed ✅",
   "FAILED": "Failed ❌",
-  "ROWS_PER_PAGE":"Rows Per Page"
+  "ROWS_PER_PAGE":"Rows Per Page",
+  "CONFIRM_CANCELLATION": "Confirm Cancellation",
+  "ARE_YOU_SURE_CANCEL_ORDER": "Are you sure you want to cancel this order?",
+  "YES_CANCEL": "Yes, Cancel it!",
+  "ORDER_CANCELLED_SUCCESSFULLY": "Order cancelled successfully",
+  "FAILED_TO_CANCEL_ORDER": "Failed to cancel order",
+  "ALREADY_CANCELLED": "Already Cancelled",
+  "CANNOT_CANCEL_CONFIRMED": "Cannot Cancel Confirmed Order",
+  "CANCEL_ORDER": "Cancel Order"
 }
