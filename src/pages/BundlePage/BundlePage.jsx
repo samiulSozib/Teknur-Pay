@@ -47,21 +47,41 @@ export default function BundlePage() {
   const [from, setForm] = useState(0)
   const [to, setTo] = useState(0)
 
+  // useEffect(() => {
+  //   // Set loading state when component mounts
+  //   setIsLoading(true);
+
+  //   dispatch(getServices(categoryId, countryId))
+  //   dispatch(getBundles(page, rowsPerPage, countryId, validity, companyId, categoryId, searchTag))
+  //   dispatch(getCountries())
+
+  //   // Set a 2-second timeout to hide the loading spinner
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 1000);
+
+  //   return () => clearTimeout(timer);
+  // }, [dispatch, validity, companyId, searchTag, page, rowsPerPage, categoryId, countryId])
+
+  // Load initial data once
   useEffect(() => {
-    // Set loading state when component mounts
     setIsLoading(true);
+    dispatch(getServices(categoryId, countryId));
+    dispatch(getCountries());
 
-    dispatch(getServices(categoryId, countryId))
-    dispatch(getBundles(page, rowsPerPage, countryId, validity, companyId, categoryId, searchTag))
-    dispatch(getCountries())
-
-    // Set a 2-second timeout to hide the loading spinner
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [dispatch, validity, companyId, searchTag, page, rowsPerPage, categoryId, countryId])
+  }, [dispatch, categoryId, countryId]);
+
+  // Load bundles when filters change (excluding companyId from initial load)
+  useEffect(() => {
+    if (!isLoading) { // Only fetch bundles after initial load
+      dispatch(getBundles(page, rowsPerPage, countryId, validity, companyId, categoryId, searchTag));
+    }
+  }, [validity, companyId, searchTag, page, rowsPerPage, countryId, categoryId, isLoading]);
 
   const categories = [
     { value: '', label: t('ALL') },
@@ -88,7 +108,7 @@ export default function BundlePage() {
       );
 
       if (matchedService) {
-        setCompanyId(matchedService.company.id);
+        setCompanyId(matchedService?.company?.id);
       } else {
         setCompanyId("");
       }
@@ -259,7 +279,7 @@ export default function BundlePage() {
         setPhoneNumberError("Invalid Phone");
       } else {
         setPhoneNumberError("");
-        setCompanyId(matchedService.company.id);
+        setCompanyId(matchedService?.company?.id);
       }
     }
     else {
@@ -373,7 +393,7 @@ export default function BundlePage() {
                 {filteredServiceList.map((service, index) => (
                   <button
                     key={index}
-                    onClick={() => setCompanyId(service?.company.id)}
+                    onClick={() => setCompanyId(service?.company?.id)}
                     className={`flex-shrink-0 px-4 py-2 text-[16px] font-medium rounded-lg border transition-all
                     ${companyId === service?.company?.id
                         ? "bg-gradient-to-r from-purple-300 to-blue-300 text-gray-900 shadow-md"

@@ -15,9 +15,9 @@ export const getBundles=(page,items_per_page,country_id,validity_type,company_id
         dispatch({type:BUNDLE_LIST_REQUEST})
         try{
             
-            // console.log('country_id'+ country_id)
-            // console.log('company_id'+ company_id)
-            // console.log('service_category_id'+ service_category_id)
+            console.log('country_id'+ country_id)
+            console.log('company_id'+ company_id)
+            console.log('service_category_id'+ service_category_id)
 
             const token = localStorage.getItem('token');
 
