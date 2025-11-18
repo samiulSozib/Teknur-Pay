@@ -25,7 +25,7 @@ export const getTransactions=(page,items_per_page)=>{
             const {reseller_balance_transactions}=response.data.data
             const total_items=response.data.payload.pagination.total
             const per_page=response.data.payload.pagination.items_per_page 
-            const current_page=response.data.payload.pagination.from
+            const current_page=response.data.payload.pagination.page
             const total_pages=response.data.payload.pagination.last_page
             
            
