@@ -24,11 +24,14 @@ export default function SubReseller() {
     const [selectedSubReseller, setSelectedSubReseller] = useState(null);
     const [view,setView]=useState(false)
     const [selectedDetails,setSelectedDetails]=useState(null)
-    const {t}=useTranslation()
+    const {t,i18n}=useTranslation()
     const [page, setPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [from,setForm]=useState(0)
     const [to,setTo]=useState(0)
+
+      const isRtl =
+    i18n.language === "ar" || i18n.language === "fa" || i18n.language === "ps";
  
 
     useEffect(() => {
@@ -207,39 +210,80 @@ export default function SubReseller() {
         </div>
 
         {/* pagination */}
-        <div className="flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4">
+        <div className={`flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4 ${isRtl ? 'rtl' : ''}`}>
           {/* {t("ROWS_PER_PAGE")} selection */}
-          <div className="flex items-center space-x-2 text-gray-600">
-            <span>{t("ROWS_PER_PAGE")}:</span>
-            <select className="p-1 min-w-[60px] text-gray-700">
-              <option>10</option>
-              <option>20</option>
+          <div className={` flex items-center ${isRtl ? 'pl-2' : 'pr-2'} text-gray-600`}>
+            <span className={`${isRtl?'pl-2':'pr-2'}`}>{t("ROWS_PER_PAGE")}:</span>
+            <select
+              className="p-1 px-2 min-w-[60px] text-gray-700 border rounded-md"
+              value={rowsPerPage}
+              onChange={(e) => {
+                setRowsPerPage(Number(e.target.value));
+                setPage(1); // Reset to first page when rows per page changes (recommended)
+              }}
+              dir="ltr"
+            >
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
             </select>
           </div>
 
           {/* Pagination info */}
-          <div className="text-gray-700 mx-4">{from}-{to} of {total_items}</div>
+          <div className={`text-gray-700 ${isRtl ? 'mx-4' : 'mx-4'}`} dir={isRtl ? "rtl" : "ltr"}>
+            {isRtl ? `${total_items} من ${to}-${from}` : `${from}-${to} of ${total_items}`}
+          </div>
 
           {/* Navigation buttons */}
-          <div className="flex items-center space-x-2">
-          <button 
-          className={`p-2 ${page === 1 ? "text-gray-300" : "text-gray-500 hover:text-gray-700"}`}
-          onClick={goToPreviousPage}
-          disabled={page === 1}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button 
-          className={`p-2 ${page === total_pages ? "text-gray-300" : "text-gray-700 hover:text-gray-900"}`}
-          onClick={goToNextPage}
-          disabled={page === total_pages}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+          <div className={`flex items-center ${isRtl ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
+            <button
+              className={`p-2 ${page === 1
+                ? "text-gray-300"
+                : "text-gray-500 hover:text-gray-700"
+                }`}
+              onClick={isRtl ? goToNextPage : goToPreviousPage}
+              disabled={isRtl ? page === total_pages : page === 1}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                transform={isRtl ? "scale(-1,1)" : "none"}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              className={`p-2 ${(isRtl ? page === total_pages : page === 1)
+                ? "text-gray-300"
+                : "text-gray-700 hover:text-gray-900"
+                }`}
+              onClick={isRtl ? goToPreviousPage : goToNextPage}
+              disabled={isRtl ? page === 1 : page === total_pages}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                transform={isRtl ? "scale(-1,1)" : "none"}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
           </div>
         </div>
 

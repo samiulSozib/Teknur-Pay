@@ -36,7 +36,7 @@ export const getSubReseller=(page,items_per_page)=>{
         dispatch({type:SUB_RESELLER_LIST_REQUEST})
         try{
             const token = localStorage.getItem('token');
-            const sub_reseller_url=`${base_url}/sub-resellers? page=${page} & items_per_page=${items_per_page}`
+            const sub_reseller_url=`${base_url}/sub-resellers? page=${page} & per_page=${items_per_page}`
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}` 
@@ -44,10 +44,10 @@ export const getSubReseller=(page,items_per_page)=>{
             };
             const response=await axios.get(sub_reseller_url,config)
             const {resellers}=response.data.data
-            const total_items=response.data.payload.pagination.total
-            const per_page=response.data.payload.pagination.items_per_page 
-            const current_page=response.data.payload.pagination.from
-            const total_pages=response.data.payload.pagination.page
+            const total_items=response.data.payload.pagination.total_items
+            const per_page=response.data.payload.pagination.per_page 
+            const current_page=response.data.payload.pagination.current_page
+            const total_pages=response.data.payload.pagination.last_page
             
            
             //console.log(response)
