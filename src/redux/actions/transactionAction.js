@@ -26,7 +26,7 @@ export const getTransactions=(page,items_per_page)=>{
             const total_items=response.data.payload.pagination.total
             const per_page=response.data.payload.pagination.items_per_page 
             const current_page=response.data.payload.pagination.from
-            const total_pages=response.data.payload.pagination.page
+            const total_pages=response.data.payload.pagination.last_page
             
            
             console.log(response)

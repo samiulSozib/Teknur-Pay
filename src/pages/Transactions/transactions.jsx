@@ -22,9 +22,7 @@ export default function Transaction() {
         dispatch(getTransactions(page , rowsPerPage));
       }, [dispatch, page, rowsPerPage]);
 
-    useEffect(()=>{
-        console.log(transactionList)
-    },[dispatch])
+ 
 
     
     useEffect(() => {
