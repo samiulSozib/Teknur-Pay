@@ -9,11 +9,13 @@ import {
 import Swal from "sweetalert2";
 
 export const LoanRequest = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const dispatch = useDispatch();
 
     const [showDialog, setShowDialog] = useState(false);
     const [balanceAmount, setBalanceAmount] = useState("");
+    const isRtl =
+        i18n.language === "ar" || i18n.language === "fa" || i18n.language === "ps";
 
     // pagination states
     const [page, setPage] = useState(1);
@@ -35,11 +37,13 @@ export const LoanRequest = () => {
     // Calculate from and to values for pagination
     const [from, setFrom] = useState(0);
     const [to, setTo] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
 
     // Fetch loan requests on load or pagination change
     useEffect(() => {
         dispatch(getLoanRequests(page, itemsPerPage));
-    }, [dispatch, page]);
+    }, [dispatch, page, rowsPerPage]);
 
     useEffect(() => {
         if (current_page && per_page && total_items) {
@@ -252,34 +256,40 @@ export const LoanRequest = () => {
 
                 {/* Pagination Controls - Same as Order component */}
 
-                <div className="flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4 mt-6">
-                    {/* {t("ROWS_PER_PAGE")} selection */}
-                    <div className="flex items-center space-x-2 text-gray-600">
-                        <span>{t("ROWS_PER_PAGE")}:</span>
+                {/* pagination */}
+                <div className={`flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4 ${isRtl ? 'rtl' : ''}`}>
+                    {/* {t("")} selection */}
+                    <div className={` flex items-center ${isRtl ? 'pl-2' : 'pr-2'} text-gray-600`}>
+                        <span className={`${isRtl ? 'pl-2' : 'pr-2'}`}></span>
                         <select
-                            value={itemsPerPage}
-                            onChange={(e) => setRowsPerPage(+e.target.value)}
-                            className="p-1 min-w-[60px] text-gray-700"
+                            className="p-1 px-2 min-w-[60px] text-gray-700 border rounded-md"
+                            value={rowsPerPage}
+                            onChange={(e) => {
+                                setRowsPerPage(Number(e.target.value));
+                                setPage(1); // Reset to first page when rows per page changes (recommended)
+                            }}
+                            dir="ltr"
                         >
                             <option value={10}>10</option>
                             <option value={20}>20</option>
+                            <option value={50}>50</option>
                         </select>
                     </div>
 
                     {/* Pagination info */}
-                    <div className="text-gray-700 mx-4">
-                        {from}-{to} of {total_items}
+                    <div className={`text-gray-700 ${isRtl ? 'mx-4' : 'mx-4'}`} dir={isRtl ? "rtl" : "ltr"}>
+                        {isRtl ? `${total_items} من ${to}-${from}` : `${from}-${to} of ${total_items}`}
                     </div>
 
                     {/* Navigation buttons */}
-                    <div className="flex items-center space-x-2">
+                    <div className={`flex items-center ${isRtl ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
                         <button
                             className={`p-2 ${page === 1
                                 ? "text-gray-300"
                                 : "text-gray-500 hover:text-gray-700"
                                 }`}
-                            onClick={goToPreviousPage}
-                            disabled={page === 1}
+                            onClick={isRtl ? goToNextPage : goToPreviousPage}
+                            disabled={isRtl ? page === total_pages : page === 1}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -287,6 +297,7 @@ export const LoanRequest = () => {
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
+                                transform={isRtl ? "scale(-1,1)" : "none"}
                             >
                                 <path
                                     strokeLinecap="round"
@@ -297,12 +308,12 @@ export const LoanRequest = () => {
                             </svg>
                         </button>
                         <button
-                            className={`p-2 ${page === total_pages
+                            className={`p-2 ${(isRtl ? page === total_pages : page === 1)
                                 ? "text-gray-300"
                                 : "text-gray-700 hover:text-gray-900"
                                 }`}
-                            onClick={goToNextPage}
-                            disabled={page === total_pages}
+                            onClick={isRtl ? goToPreviousPage : goToNextPage}
+                            disabled={isRtl ? page === 1 : page === total_pages}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -310,6 +321,7 @@ export const LoanRequest = () => {
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
+                                transform={isRtl ? "scale(-1,1)" : "none"}
                             >
                                 <path
                                     strokeLinecap="round"
@@ -321,6 +333,8 @@ export const LoanRequest = () => {
                         </button>
                     </div>
                 </div>
+
+                {/* pagination */}
 
             </div>
 

@@ -30,7 +30,7 @@ export const getLoanRequests = (page = 1, items_per_page = 10) => {
         current_page: balances?.current_page || 1,
         total_pages: balances?.last_page || 1,
         total_items: balances?.total || 0,
-        par_page: balances?.per_page || items_per_page,
+        par_page: balances?.per_page
       };
 
       dispatch({ type: LOAN_REQUEST_LIST_SUCCESS, payload });

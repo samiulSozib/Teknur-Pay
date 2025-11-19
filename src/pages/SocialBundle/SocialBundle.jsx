@@ -233,9 +233,9 @@ export default function SocialBundle() {
 
             {/* pagination */}
             <div className="flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4">
-              {/* {t("ROWS_PER_PAGE")} selection */}
+              {/* {t("")} selection */}
               <div className="flex items-center space-x-2 text-gray-600">
-                <span>{t("ROWS_PER_PAGE")}:</span>
+                <span></span>
                 <select className="p-1 min-w-[60px] text-gray-700">
                   <option>10</option>
                   <option>20</option>

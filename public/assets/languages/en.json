@@ -369,7 +369,7 @@
   "SUCCESSFUL": "Successful ✅",
   "COMPLETED": "Completed ✅",
   "FAILED": "Failed ❌",
-  "ROWS_PER_PAGE":"Rows Per Page",
+  "":"Rows Per Page",
   "CONFIRM_CANCELLATION": "Confirm Cancellation",
   "ARE_YOU_SURE_CANCEL_ORDER": "Are you sure you want to cancel this order?",
   "YES_CANCEL": "Yes, Cancel it!",

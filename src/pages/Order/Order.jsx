@@ -19,6 +19,7 @@ export default function Order() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [from, setForm] = useState(0);
   const [to, setTo] = useState(0);
+  const [searchTarget,setSearchTarge]=useState("")
 
   const isRtl =
     i18n.language === "ar" || i18n.language === "fa" || i18n.language === "ps";
@@ -36,8 +37,8 @@ export default function Order() {
   };
 
   useEffect(() => {
-    dispatch(getOrders(page, rowsPerPage, filterStatus, ""));
-  }, [dispatch, page, rowsPerPage, filterStatus]);
+    dispatch(getOrders(page, rowsPerPage, filterStatus, "",searchTarget));
+  }, [dispatch, page, rowsPerPage, filterStatus,searchTarget]);
 
   useEffect(() => {
     if (current_page && per_page && total_items) {
@@ -163,10 +164,9 @@ export default function Order() {
       </div>
 
       <div className="border rounded-md bg-[#EEF4FF] col-span-12 space-y-6 xl:col-span-12 p-2">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Phone Number Input */}
-          <div className="bg-[#EEF4FF] rounded-lg">
-            <form className="hidden">
+          <div className="bg-[#FFFFFF] rounded-lg">
               <div className="relative">
                 <span className="absolute left-4 top-1/2 -translate-y-1/2">
                   <svg
@@ -185,29 +185,15 @@ export default function Order() {
                   </svg>
                 </span>
                 <input
+                  onChange={(e)=>setSearchTarge(e.target.value)}
                   type="text"
-                  placeholder="Destination phone number"
+                  placeholder={t('SEARCH')}
                   className="h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pl-12 pr-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-none focus:ring focus:ring-brand-500/10 dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
                 />
               </div>
-            </form>
           </div>
 
-          {/* Transfer Amount Input */}
-          <div className="bg-[#EEF4FF] rounded-lg">
-            <form className="hidden">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Transfer amount"
-                  className="h-11 w-full rounded-lg border border-gray-200 bg-transparent py-2.5 pl-4 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-none focus:ring focus:ring-brand-500/10 dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800"
-                />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 dark:text-white/80">
-                  {user_info?.currency?.code}
-                </span>
-              </div>
-            </form>
-          </div>
+          
 
           {/* Submit Button */}
           <div className="bg-white rounded-md w-full">
@@ -224,8 +210,7 @@ export default function Order() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {/* Submit Button */}
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="flex items-center">
             <button
               style={{ borderRadius: "50px" }}
@@ -242,7 +227,7 @@ export default function Order() {
               {t("CLEAR_FILTER")}
             </button>
           </div>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           {orderList.map((order) => (
@@ -342,9 +327,9 @@ export default function Order() {
         </div>
         {/* pagination */}
         <div className={`flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4 ${isRtl ? 'rtl' : ''}`}>
-          {/* {t("ROWS_PER_PAGE")} selection */}
+          {/* {t("")} selection */}
           <div className={` flex items-center ${isRtl ? 'pl-2' : 'pr-2'} text-gray-600`}>
-            <span className={`${isRtl?'pl-2':'pr-2'}`}>{t("ROWS_PER_PAGE")}:</span>
+            <span className={`${isRtl?'pl-2':'pr-2'}`}></span>
             <select
               className="p-1 px-2 min-w-[60px] text-gray-700 border rounded-md"
               value={rowsPerPage}

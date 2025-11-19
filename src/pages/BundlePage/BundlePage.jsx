@@ -467,9 +467,9 @@ export default function BundlePage() {
               {/* pagination - only shows after bundles are loaded */}
               {bundleList.length > 0 && (
                 <div className={`flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4 ${isRtl ? 'rtl' : ''}`}>
-          {/* {t("ROWS_PER_PAGE")} selection */}
+          {/* {t("")} selection */}
           <div className={` flex items-center ${isRtl ? 'pl-2' : 'pr-2'} text-gray-600`}>
-            <span className={`${isRtl?'pl-2':'pr-2'}`}>{t("ROWS_PER_PAGE")}:</span>
+            <span className={`${isRtl?'pl-2':'pr-2'}`}></span>
             <select
               className="p-1 px-2 min-w-[60px] text-gray-700 border rounded-md"
               value={rowsPerPage}
