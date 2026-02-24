@@ -377,5 +377,8 @@
   "FAILED_TO_CANCEL_ORDER": "Failed to cancel order",
   "ALREADY_CANCELLED": "Already Cancelled",
   "CANNOT_CANCEL_CONFIRMED": "Cannot Cancel Confirmed Order",
-  "CANCEL_ORDER": "Cancel Order"
+  "CANCEL_ORDER": "Cancel Order",
+  "ENTER_REQUIRED_FIELDS":"Enter Required Fields",
+  "PHONE_NUMBER_IS_REQUIRED":"Phone Number is Required",
+  "PIN_IS_REQUIRED":"PIN is Required"
 }

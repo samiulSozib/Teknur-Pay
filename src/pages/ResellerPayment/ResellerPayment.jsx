@@ -139,7 +139,7 @@ export const ResellerPayment = () => {
 
   const handleSubmit = async () => {
     try {
-      console.log(formData);
+      //console.log(formData);
       const result = await dispatch(addResellerPayments(formData));
 
       // Check if the result contains an error
@@ -541,7 +541,7 @@ export const ResellerPayment = () => {
                   {/* Notes */}
                   <div className="flex flex-col w-full">
                     <label className="text-gray-600 text-sm mb-1 font-medium">
-                      {t("NOTES")} <span className="text-red-500">*</span>
+                      {t("NOTES")}
                     </label>
                     <textarea
                       name="notes"
@@ -550,7 +550,6 @@ export const ResellerPayment = () => {
                       className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       rows={3}
                       placeholder={t("ENTER_NOTES")}
-                      required
                     />
                   </div>
 
@@ -735,7 +734,6 @@ export const ResellerPayment = () => {
                     !formData.currency_id ||
                     !formData.payment_date ||
                     !formData.tracking_code ||
-                    !formData.notes ||
                     !formData.payment_image
                   }
                   className="px-4 py-2 text-white font-medium bg-green-500 rounded-[50px] hover:bg-green-600 transition disabled:bg-green-300 disabled:cursor-not-allowed"

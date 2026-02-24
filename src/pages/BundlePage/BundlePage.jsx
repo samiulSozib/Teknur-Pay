@@ -47,24 +47,14 @@ export default function BundlePage() {
   const [from, setForm] = useState(0)
   const [to, setTo] = useState(0)
 
-    const isRtl =
+  // Add modal errors state
+  const [modalErrors, setModalErrors] = useState({
+    number: "",
+    pin: ""
+  });
+
+  const isRtl =
     i18n.language === "ar" || i18n.language === "fa" || i18n.language === "ps";
-
-  // useEffect(() => {
-  //   // Set loading state when component mounts
-  //   setIsLoading(true);
-
-  //   dispatch(getServices(categoryId, countryId))
-  //   dispatch(getBundles(page, rowsPerPage, countryId, validity, companyId, categoryId, searchTag))
-  //   dispatch(getCountries())
-
-  //   // Set a 2-second timeout to hide the loading spinner
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 1000);
-
-  //   return () => clearTimeout(timer);
-  // }, [dispatch, validity, companyId, searchTag, page, rowsPerPage, categoryId, countryId])
 
   // Load initial data once
   useEffect(() => {
@@ -109,7 +99,7 @@ export default function BundlePage() {
           number.startsWith(code.reserved_digit)
         )
       );
-
+      console.log(matchedService)
       if (matchedService) {
         setCompanyId(matchedService?.company?.id);
       } else {
@@ -159,6 +149,27 @@ export default function BundlePage() {
     }
   }, [dispatch, countries, phoneNumberLength, countryId]);
 
+  // Add validation function
+  const validateModalFields = () => {
+    let newErrors = {};
+
+    if (!number) {
+      newErrors.number = t('PHONE_NUMBER_IS_REQUIRED');
+    } else if (number.length !== parseInt(phoneNumberLength)) {
+      newErrors.number = `Number should be ${phoneNumberLength} digits.`;
+    }
+
+    if (!pin) {
+      newErrors.pin = t('PIN_IS_REQUIRED');
+    } else if (pin.length !== 4) {
+      newErrors.pin = "PIN must be 4 digits.";
+    }
+
+    setModalErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Update handleCloseModal to clear errors
   const handleCloseModal = () => {
     setModalOpen(false)
     setErrorMessage("")
@@ -166,10 +177,14 @@ export default function BundlePage() {
     setPhoneNumberError("")
     setSelectedBundle(null)
     setPin("")
+    setModalErrors({ number: "", pin: "" }) // Clear modal errors
   }
 
+  // Update checkPIN function
   const checkPIN = () => {
-    dispatch(confirmPin(pin, selectedBundle.id, number))
+    if (validateModalFields()) {
+      dispatch(confirmPin(pin, selectedBundle.id, number))
+    }
   }
 
   useEffect(() => {
@@ -219,31 +234,6 @@ export default function BundlePage() {
     } else if (value.length === phoneNumberLength) {
       setPhoneNumberError("");  // Clear error if length is correct
     }
-    // else if (value.length >= 3) {
-    //   const prefix = value.substring(0, 4);
-    //   const matchedService = serviceList.find(service =>
-    //     service?.company?.companycodes.some(code => prefix.startsWith(code.reserved_digit))
-    //   );
-    //   console.log(serviceList)
-    //   console.log(matchedService)
-    //   console.log(selectedBundle?.service?.company_id)
-
-    //   if (selectedBundle) {
-    //     if (matchedService?.company?.id != selectedBundle?.service?.company_id) {
-    //       console.log(matchedService?.company?.id != selectedBundle?.service?.company_id)
-    //       setPhoneNumberError("Invalid Phone")
-    //     } else {
-    //       setPhoneNumberError("")
-    //     }
-    //   }
-
-    //   else if (!matchedService) {
-    //     setPhoneNumberError("Invalid Phone")
-    //   } else {
-    //     setPhoneNumberError("");
-    //     setCompanyId(matchedService.company.id);
-    //   }
-    // } 
     else if (value.length >= 3) {
       let matchedService = null;
       let matchedPrefix = "";
@@ -266,10 +256,6 @@ export default function BundlePage() {
           }
         }
       }
-
-      // console.log(serviceList);
-      // console.log(matchedService);
-      // console.log(selectedBundle?.service?.company_id);
 
       if (selectedBundle) {
         if (matchedService?.company?.id != selectedBundle?.service?.company_id) {
@@ -312,6 +298,14 @@ export default function BundlePage() {
     { label: categoryName, href: '/' },
     { label: t("BUNDLE"), href: "" }
   ];
+
+  const [errors, setErrors] = useState({
+    reseller_name: "",
+    contact_name: "",
+    phone: "",
+    email: "",
+  });
+  
 
   return (
     <>
@@ -577,22 +571,28 @@ export default function BundlePage() {
             </div>
 
             <div className="border-2 border-gray-400 rounded-md p-2 mt-2 flex flex-col items-center gap-3">
-              <div className="relative">
+              <div className="relative w-full">
                 <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">
                   <Dialpad className="h-[24px] w-[24px]" />
                 </span>
                 {type == "social" && (
                   <Input
                     value={number}
-                    onChange={(e) => setNumber(e.target.value)}
+                    onChange={(e) => {
+                      setNumber(e.target.value);
+                      if (modalErrors.number) {
+                        setModalErrors({ ...modalErrors, number: "" });
+                      }
+                    }}
                     type="number"
                     placeholder={t("ENTER_YOUR_NUMBER")}
                     required
+                    error={Boolean(modalErrors.number)}
+                    hint={modalErrors.number}
                     inputProps={{
                       min: 0,
                     }}
-                    className={`h-11 rounded-lg border border-gray-200' bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring focus:border-brand-300 focus:ring-brand-500/10'
-                dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                    className={`h-11 rounded-lg border ${modalErrors.number ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${modalErrors.number ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
                   />
                 )}
                 {type == "nonsocial" && (
@@ -602,36 +602,46 @@ export default function BundlePage() {
                       const value = e.target.value;
                       if (value.length <= phoneNumberLength) {
                         handleNumberChange(e);
+                        if (modalErrors.number) {
+                          setModalErrors({ ...modalErrors, number: "" });
+                        }
                       }
                     }}
                     type="text"
                     inputMode="numeric"
                     pattern="[0-9]*"
-                    error={Boolean(phoneNumberError)}
-                    hint={phoneNumberError}
+                    error={Boolean(modalErrors.number || phoneNumberError)}
+                    hint={modalErrors.number || phoneNumberError}
                     placeholder={t("ENTER_YOUR_NUMBER")}
-                    helperText={phoneNumberError}
+                    helperText={modalErrors.number || phoneNumberError}
                     required
                     inputProps={{
                       min: 0,
                     }}
-                    className={`rounded-lg border ${phoneNumberError ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${phoneNumberError ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                    className={`rounded-lg border ${(modalErrors.number || phoneNumberError) ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${(modalErrors.number || phoneNumberError) ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
                   />
                 )}
               </div>
-              <div className="relative">
+              <div className="relative w-full">
                 <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">
                   <Dialpad className="h-[24px] w-[24px]" />
                 </span>
 
                 <Input
                   value={pin}
-                  onChange={(e) => setPin(e.target.value)}
+                  onChange={(e) => {
+                    setPin(e.target.value);
+                    if (modalErrors.pin) {
+                      setModalErrors({ ...modalErrors, pin: "" });
+                    }
+                  }}
                   type="password"
                   placeholder={t('ENTER_PIN')}
                   required
-                  max={4}
-                  className={`rounded-lg border border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring focus:border-brand-300 focus:ring-brand-500/10 dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                  error={Boolean(modalErrors.pin)}
+                  hint={modalErrors.pin}
+                  maxLength={4}
+                  className={`rounded-lg border ${modalErrors.pin ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${modalErrors.pin ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
                 />
               </div>
             </div>
@@ -642,7 +652,7 @@ export default function BundlePage() {
               </div>
             ) : (
               <div className="flex flex-row justify-between mt-2">
-                <button disabled={!!phoneNumberError || !number} onClick={checkPIN} className="bg-green-500 rounded-[50px] px-3 py-2 w-[100px] text-white">{t('CONFIRM')}</button>
+                <button onClick={checkPIN} className="bg-green-500 rounded-[50px] px-3 py-2 w-[100px] text-white">{t('CONFIRM')}</button>
                 <button onClick={handleCloseModal} className="bg-white text-red-500 px-3 py-2 w-[100px] border border-red-500 rounded-[50px]">{t("CANCEL")}</button>
               </div>
             )}

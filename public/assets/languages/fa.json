@@ -377,5 +377,9 @@
   "FAILED_TO_CANCEL_ORDER": "لغو سفارش انجام نشد",
   "ALREADY_CANCELLED": "قبلاً لغو شده",
   "CANNOT_CANCEL_CONFIRMED": "امکان لغو سفارش تأیید شده وجود ندارد",
-  "CANCEL_ORDER": "لغو سفارش"
+  "CANCEL_ORDER": "لغو سفارش",
+    "ENTER_REQUIRED_FIELDS": "لطفاً فیلدهای الزامی را وارد کنید",
+    "PHONE_NUMBER_IS_REQUIRED": "شماره تلفن الزامی است",
+  "PIN_IS_REQUIRED": "وارد کردن رمز الزامی است"
+
 }

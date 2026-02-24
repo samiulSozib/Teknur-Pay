@@ -377,6 +377,9 @@
   "FAILED_TO_CANCEL_ORDER": "د امر لغوه کول ناکام شول",
   "ALREADY_CANCELLED": "مخکې لغوه شوی",
   "CANNOT_CANCEL_CONFIRMED": "تایید شوی امر نشئ لغوه کولی",
-  "CANCEL_ORDER": "امر لغوه کول"
+  "CANCEL_ORDER": "امر لغوه کول",
+  "ENTER_REQUIRED_FIELDS": "مهرباني وکړئ اړينې برخې ډکې کړئ",
+  "PHONE_NUMBER_IS_REQUIRED": "د تلیفون شمېره اړینه ده",
+  "PIN_IS_REQUIRED": "د PIN داخلول اړین دي"
 
 }

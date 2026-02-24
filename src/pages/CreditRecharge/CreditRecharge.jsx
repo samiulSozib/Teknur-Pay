@@ -172,13 +172,30 @@ const handleNumberChange = (e) => {
 };
 
 const handleRecharge=()=>{
-  console.log(number)
-  console.log(amount)
+  // console.log(number)
+  // console.log(amount)
   
   if (!number || !amount) {
     toast.error('Number and amount are required!');
+    Swal.fire({
+      title:t('ENTER_REQUIRED_FIELDS'),
+       showCancelButton: true,
+       showConfirmButton: true,
+      confirmButtonText: t("OK"),
+      cancelButtonText: t("CANCEL"),
+      customClass: {
+        popup: "rounded-xl p-6",
+        title: "text-lg font-semibold text-gray-900",
+        confirmButton:
+          "bg-green-600 hover:bg-green-700 text-white font-medium rounded-full px-6 py-2 shadow-md mr-2",
+        cancelButton:
+          "bg-white border border-gray-300 text-gray-900 font-medium rounded-full px-6 py-2 shadow-md",
+      },
+      buttonsStyling: false,
+    })
     return;
   }
+  
   Swal.fire({
       title: t('ARE_YOU_SURE_ABOUT_YOUR_TRANSFER'),
       showCancelButton: true,
