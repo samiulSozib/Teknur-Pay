@@ -23,7 +23,9 @@ export default function DashboardGrid() {
       navigate(`/nonsocial?categoryId=${serviceCategory.id}&categoryName=${encodeURIComponent(serviceCategory.category_name)}`);
     } else {
       // Navigate to social page with query parameters
-      navigate(`/bundle?type=social&categoryId=${serviceCategory.id}&countryId=2&categoryName=${encodeURIComponent(serviceCategory.category_name)}`);
+            // navigate(`/bundle?type=social&categoryId=${serviceCategory.id}&countryId=2&categoryName=${encodeURIComponent(serviceCategory.category_name)}`);
+
+      navigate(`/social?type=social&categoryId=${serviceCategory.id}&countryId=2&categoryName=${encodeURIComponent(serviceCategory.category_name)}`);
     }
   };
 

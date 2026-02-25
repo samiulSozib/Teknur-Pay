@@ -40,7 +40,7 @@ export default function Home() {
             window.location.href = "/credit-recharge"; // redirect to the desired link
           }}
         >
-          {t('CREDIT_TRANSFER')}
+          {t('AFGHANISTAN_TOP_UP')}
         </div>
 
 

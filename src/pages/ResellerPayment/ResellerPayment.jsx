@@ -269,19 +269,18 @@ export const ResellerPayment = () => {
                           {t("STATUS")}
                         </span>
                         <span
-                          className={`text-xs font-medium px-2 py-1 rounded-md ${
-                            payment.status?.toLowerCase() === "pending"
+                          className={`text-xs font-medium px-2 py-1 rounded-md ${payment.status?.toLowerCase() === "pending"
                               ? "bg-yellow-100 text-yellow-800"
                               : payment.status?.toLowerCase() === "completed"
-                              ? "bg-green-100 text-green-800"
-                              : payment.status?.toLowerCase() === "failed"
-                              ? "bg-red-100 text-red-800"
-                              : payment.status?.toLowerCase() === "rollbacked"
-                              ? "bg-purple-100 text-purple-800"
-                              : payment.status?.toLowerCase() === "rejected"
-                              ? "bg-red-100 text-red-800"
-                              : "bg-gray-100 text-gray-800"
-                          }`}
+                                ? "bg-green-100 text-green-800"
+                                : payment.status?.toLowerCase() === "failed"
+                                  ? "bg-red-100 text-red-800"
+                                  : payment.status?.toLowerCase() === "rollbacked"
+                                    ? "bg-purple-100 text-purple-800"
+                                    : payment.status?.toLowerCase() === "rejected"
+                                      ? "bg-red-100 text-red-800"
+                                      : "bg-gray-100 text-gray-800"
+                            }`}
                         >
                           {payment.status}
                         </span>
@@ -422,7 +421,6 @@ export const ResellerPayment = () => {
                   <div className="flex flex-col w-full">
                     <label className="text-gray-600 text-sm mb-1 font-medium">
                       {t("PAYMENT_IMAGE")}{" "}
-                      <span className="text-red-500">*</span>
                     </label>
                     <div className="flex items-center gap-2">
                       <label className="flex-1">
@@ -453,7 +451,6 @@ export const ResellerPayment = () => {
                           onChange={(e) => handleFileChange(e, "payment_image")}
                           className="hidden"
                           accept="image/*"
-                          required={!imagePreviews.payment_image}
                         />
                       </label>
                       {imagePreviews.payment_image && (
@@ -505,7 +502,6 @@ export const ResellerPayment = () => {
                   <div className="flex flex-col w-full">
                     <label className="text-gray-600 text-sm mb-1 font-medium">
                       {t("TRACKING_CODE")}{" "}
-                      <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -514,7 +510,7 @@ export const ResellerPayment = () => {
                       onChange={handleInputChange}
                       className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder={t("ENTER_TRACKING_CODE")}
-                      required
+
                     />
                   </div>
 
@@ -732,10 +728,7 @@ export const ResellerPayment = () => {
                     !formData.payment_method_id ||
                     !formData.amount ||
                     !formData.currency_id ||
-                    !formData.payment_date ||
-                    !formData.tracking_code ||
-                    !formData.payment_image
-                  }
+                    !formData.payment_date}
                   className="px-4 py-2 text-white font-medium bg-green-500 rounded-[50px] hover:bg-green-600 transition disabled:bg-green-300 disabled:cursor-not-allowed"
                 >
                   {t("SAVE")}
@@ -752,13 +745,12 @@ export const ResellerPayment = () => {
           <div className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-[90%] md:w-[80%] lg:w-80 text-left m-2">
             <div
               ref={modalRef}
-              className={`border ${
-                selectedPayment.status == "failed"
+              className={`border ${selectedPayment.status == "failed"
                   ? "border-red-500"
                   : selectedPayment.status == "completed"
-                  ? "border-green-500"
-                  : "border-yellow-500"
-              } rounded-md flex flex-col gap-3`}
+                    ? "border-green-500"
+                    : "border-yellow-500"
+                } rounded-md flex flex-col gap-3`}
             >
               {/* Status Image */}
               <div className="flex flex-col items-center justify-center mt-3">
@@ -767,109 +759,109 @@ export const ResellerPayment = () => {
                     selectedPayment.status == "pending"
                       ? "/images/img/pending_image.png"
                       : selectedPayment.status == "completed"
-                      ? "/images/img/success_image.png"
-                      : "/images/img/red_cancel_icon.png"
+                        ? "/images/img/success_image.png"
+                        : "/images/img/red_cancel_icon.png"
                   }
                   alt=""
                   className="w-[70px] h-[70px] object-contain"
                 />
-                <span>{selectedPayment.status=="pending"?t('PENDING'):selectedPayment.status=="completed"?t('COMPLETED'):t('FAILED')}</span>
+                <span>{selectedPayment.status == "pending" ? t('PENDING') : selectedPayment.status == "completed" ? t('COMPLETED') : t('FAILED')}</span>
               </div>
 
               {/* Payment Images Preview */}
               {(selectedPayment.payment_image_url ||
                 selectedPayment.extra_image_1_url ||
                 selectedPayment.extra_image_2_url) && (
-                <div className="flex flex-wrap justify-center gap-2 p-2">
-                  {selectedPayment.payment_image_url && (
-                    <div
-                      className="relative cursor-pointer"
-                      onClick={() =>
-                        window.open(selectedPayment.payment_image_url, "_blank")
-                      }
-                    >
-                      <img
-                        src={selectedPayment.payment_image_url}
-                        alt="Payment"
-                        className="w-16 h-16 object-cover rounded-md border border-gray-200"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-30 transition-opacity">
-                        <svg
-                          className="w-5 h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10v4h4v-4h-4z"
-                          />
-                        </svg>
+                  <div className="flex flex-wrap justify-center gap-2 p-2">
+                    {selectedPayment.payment_image_url && (
+                      <div
+                        className="relative cursor-pointer"
+                        onClick={() =>
+                          window.open(selectedPayment.payment_image_url, "_blank")
+                        }
+                      >
+                        <img
+                          src={selectedPayment.payment_image_url}
+                          alt="Payment"
+                          className="w-16 h-16 object-cover rounded-md border border-gray-200"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-30 transition-opacity">
+                          <svg
+                            className="w-5 h-5 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10v4h4v-4h-4z"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  {selectedPayment.extra_image_1_url && (
-                    <div
-                      className="relative cursor-pointer"
-                      onClick={() =>
-                        window.open(selectedPayment.extra_image_1_url, "_blank")
-                      }
-                    >
-                      <img
-                        src={selectedPayment.extra_image_1_url}
-                        alt="Extra 1"
-                        className="w-16 h-16 object-cover rounded-md border border-gray-200"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-30 transition-opacity">
-                        <svg
-                          className="w-5 h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10v4h4v-4h-4z"
-                          />
-                        </svg>
+                    )}
+                    {selectedPayment.extra_image_1_url && (
+                      <div
+                        className="relative cursor-pointer"
+                        onClick={() =>
+                          window.open(selectedPayment.extra_image_1_url, "_blank")
+                        }
+                      >
+                        <img
+                          src={selectedPayment.extra_image_1_url}
+                          alt="Extra 1"
+                          className="w-16 h-16 object-cover rounded-md border border-gray-200"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-30 transition-opacity">
+                          <svg
+                            className="w-5 h-5 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10v4h4v-4h-4z"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  {selectedPayment.extra_image_2_url && (
-                    <div
-                      className="relative cursor-pointer"
-                      onClick={() =>
-                        window.open(selectedPayment.extra_image_2_url, "_blank")
-                      }
-                    >
-                      <img
-                        src={selectedPayment.extra_image_2_url}
-                        alt="Extra 2"
-                        className="w-16 h-16 object-cover rounded-md border border-gray-200"
-                      />
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-30 transition-opacity">
-                        <svg
-                          className="w-5 h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10v4h4v-4h-4z"
-                          />
-                        </svg>
+                    )}
+                    {selectedPayment.extra_image_2_url && (
+                      <div
+                        className="relative cursor-pointer"
+                        onClick={() =>
+                          window.open(selectedPayment.extra_image_2_url, "_blank")
+                        }
+                      >
+                        <img
+                          src={selectedPayment.extra_image_2_url}
+                          alt="Extra 2"
+                          className="w-16 h-16 object-cover rounded-md border border-gray-200"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black bg-opacity-30 transition-opacity">
+                          <svg
+                            className="w-5 h-5 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 10v4h4v-4h-4z"
+                            />
+                          </svg>
+                        </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
+                    )}
+                  </div>
+                )}
 
               <div className="flex flex-col gap-2 p-2">
                 <div className="flex flex-row justify-between">
@@ -907,13 +899,12 @@ export const ResellerPayment = () => {
               </div>
 
               <div
-                className={`${
-                  selectedPayment.status === "failed"
+                className={`${selectedPayment.status === "failed"
                     ? "bg-red-100 border-red-500"
                     : selectedPayment.status === "completed"
-                    ? "bg-green-100 border-green-500"
-                    : "bg-yellow-100 border-yellow-500"
-                } border rounded-lg p-3 flex items-center m-3`}
+                      ? "bg-green-100 border-green-500"
+                      : "bg-yellow-100 border-yellow-500"
+                  } border rounded-lg p-3 flex items-center m-3`}
               >
                 {/* Date & Time Section */}
                 <div className="flex flex-col ml-3 w-full">

@@ -282,7 +282,7 @@ const handleRecharge=()=>{
   };
 
   const breadcrumbPaths = [
-    { label: t('CUSTOM_RECHARGE'), href: "/credit-recharge" },
+    { label: t('AFGHANISTAN_TOP_UP'), href: "/credit-recharge" },
   ];
 
 

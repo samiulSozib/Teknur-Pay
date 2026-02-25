@@ -380,5 +380,7 @@
   "CANCEL_ORDER": "Cancel Order",
   "ENTER_REQUIRED_FIELDS":"Enter Required Fields",
   "PHONE_NUMBER_IS_REQUIRED":"Phone Number is Required",
-  "PIN_IS_REQUIRED":"PIN is Required"
+  "PIN_IS_REQUIRED":"PIN is Required",
+  "AFGHANISTAN_TOP_UP":"Afghanistan Top Up",
+  "ENTER_ID":"Enter ID.."
 }

@@ -380,6 +380,8 @@
   "CANCEL_ORDER": "لغو سفارش",
     "ENTER_REQUIRED_FIELDS": "لطفاً فیلدهای الزامی را وارد کنید",
     "PHONE_NUMBER_IS_REQUIRED": "شماره تلفن الزامی است",
-  "PIN_IS_REQUIRED": "وارد کردن رمز الزامی است"
+  "PIN_IS_REQUIRED": "وارد کردن رمز الزامی است",
+  "AFGHANISTAN_TOP_UP": "تاپ‌آپ افغانستان",
+  "ENTER_ID": "آیدی را وارد کنید..."
 
 }

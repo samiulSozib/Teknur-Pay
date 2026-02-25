@@ -380,6 +380,8 @@
   "CANCEL_ORDER": "امر لغوه کول",
   "ENTER_REQUIRED_FIELDS": "مهرباني وکړئ اړينې برخې ډکې کړئ",
   "PHONE_NUMBER_IS_REQUIRED": "د تلیفون شمېره اړینه ده",
-  "PIN_IS_REQUIRED": "د PIN داخلول اړین دي"
+  "PIN_IS_REQUIRED": "د PIN داخلول اړین دي",
+  "AFGHANISTAN_TOP_UP": "افغانستان ټاپ اپ",
+  "ENTER_ID": "آی ډي داخل کړئ..."
 
 }
