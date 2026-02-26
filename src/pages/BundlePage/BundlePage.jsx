@@ -445,7 +445,7 @@ export default function BundlePage() {
                     <div className="flex flex-col w-full">
                       <div className="flex flex-row justify-between items-center">
                         <span className="text-[12px] font-medium text-gray-800">{bundle?.bundle_title}</span>
-                        <span className="text-[10px] text-purple-600 font-medium">{bundle?.validity_type?.charAt(0).toUpperCase() + bundle?.validity_type?.slice(1)}</span>
+                        <span className="text-[10px] text-purple-600 font-medium">{t(bundle?.validity_type)}</span>
                       </div>
 
                       <div className="flex flex-row justify-between items-center">
@@ -606,7 +606,7 @@ export default function BundlePage() {
               <div className="flex items-center justify-center gap-2">
                 <span className="text-xs font-medium text-gray-600">{t('VALIDITY')}:</span>
                 <span className="text-xs font-semibold text-purple-700 bg-white px-3 py-1 rounded-full">
-                  {selectedBundle?.validity_type?.charAt(0).toUpperCase() + selectedBundle?.validity_type?.slice(1)}
+                  {t(selectedBundle?.validity_type)}
                 </span>
               </div>
             </div>

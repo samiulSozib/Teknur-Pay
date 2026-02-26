@@ -385,5 +385,12 @@
   "ENTER_ID":"Enter ID..",
   "SELLING_PRICE_NEW":"Selling Price",
   "ADJUSTMENT":"Adjustment",
-  "BASE_AMOUNT":"Base Amount"
+  "BASE_AMOUNT":"Base Amount",
+  "unlimited":"Unlimited",
+  "yearly": "Yearly",
+  "monthly": "Monthly",
+  "weekly": "Weekly",
+  "daily": "Daily",
+  "nightly": "Nightly",
+  "hourly": "Hourly"
 }

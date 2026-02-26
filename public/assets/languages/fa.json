@@ -385,6 +385,13 @@
   "ENTER_ID": "آیدی را وارد کنید...",
    "SELLING_PRICE_NEW": "قیمت فروش",
   "ADJUSTMENT": "تعدیل",
-  "BASE_AMOUNT": "مبلغ پایه"
+  "BASE_AMOUNT": "مبلغ پایه",
+  "unlimited": "نامحدود",
+  "yearly": "سالیانه",
+  "monthly": "ماهانه",
+  "weekly": "هفته‌وار",
+  "daily": "روزانه",
+  "nightly": "شبانه",
+  "hourly": "ساعتی"
 
 }

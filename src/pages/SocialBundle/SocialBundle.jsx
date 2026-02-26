@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import PageMeta from "../../components/common/PageMeta";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { getCountries } from '../../redux/actions/locationAction'
 import { placeOrder, confirmPin, clearMessages } from '../../redux/actions/rechargeAction'
@@ -12,9 +12,10 @@ import Swal from "sweetalert2";
 import { useTranslation } from "react-i18next";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb"
 import { toast } from "react-toastify";
-import { Handbag, PhoneCall, Tag } from "lucide-react";
+import { Handbag, PhoneCall, Tag, ArrowLeft } from "lucide-react";
 
 export default function SocialBundle() {
+  const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const countryId = queryParams.get('countryId');
@@ -158,10 +159,12 @@ export default function SocialBundle() {
     if (page < total_pages) setPage(page + 1);
   };
 
+  const handleGoBack = () => {
+    navigate(-1); // This goes back to the previous page
+  };
+
   const breadcrumbPaths = [
-    { label: t("PRODUCT_PACKAGE"), href: "/product-and-packages" },
-    { label: t('SOCIAL_PACKAGES'), href: '/social' },
-    { label: t('SOCIAL_BUNDLE'), href: '/social-bundle' }
+    { label: t('SOCIAL_BUNDLE'), href: '/' }
   ];
 
   return (
@@ -171,9 +174,16 @@ export default function SocialBundle() {
         description=""
       />
       <div className="grid grid-cols-12 gap-4 md:gap-6">
-        {/* title section */}
+        {/* title section with back button */}
         <div className="col-span-12 space-y-6 xl:col-span-12">
-          <div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleGoBack}
+              className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-4 w-4 text-gray-700" />
+            </button>
             <Breadcrumb paths={breadcrumbPaths} />
           </div>
         </div>
@@ -194,11 +204,11 @@ export default function SocialBundle() {
                 <div className="flex flex-col w-full">
                   <div className="flex flex-row justify-between items-center">
                     <span className="text-[12px] font-medium text-gray-800">{bundle?.bundle_title}</span>
-                    <span className="text-[10px] text-purple-600 font-medium">{bundle.validity_type?.toUpperCase()}</span>
+                    <span className="text-[10px] text-purple-600 font-medium">{t(bundle.validity_type)}</span>
                   </div>
 
                   <div className="flex flex-row justify-between items-center">
-                    <span className="text-[12px] font-semibold">Sale:</span>
+                    <span className="text-[12px] font-semibold">{t('SELL')}:</span>
                     <span className="text-[12px] font-semibold text-gray-900">{bundle.selling_price} {user_info?.currency?.code}</span>
                   </div>
                 </div>

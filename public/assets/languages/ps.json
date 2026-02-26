@@ -385,6 +385,13 @@
   "ENTER_ID": "آی ډي داخل کړئ...",
   "SELLING_PRICE_NEW": "د پلور بیه",
   "ADJUSTMENT": "سمون",
-  "BASE_AMOUNT": "اساسي مقدار"
+  "BASE_AMOUNT": "اساسي مقدار",
+   "unlimited": "نامحدود",
+  "yearly": "کلنی",
+  "monthly": "میاشتنی",
+  "weekly": "اونیز",
+  "daily": "ورځنی",
+  "nightly": "شپنی",
+  "hourly": "ساعت وار"
 
 }

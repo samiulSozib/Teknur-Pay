@@ -7,8 +7,7 @@ import { useTranslation } from "react-i18next";
 export default function SocialPackage() {
   const {t}=useTranslation()
   const breadcrumbPaths = [
-    { label: t("PRODUCT_PACKAGE"), href: "/product-and-packages" },
-    {label:t('SOCIAL_PACKAGES'),href:'/social'}
+    {label:t('SOCIAL_PACKAGES'),href:'/'}
   ];
   return (
     <>
