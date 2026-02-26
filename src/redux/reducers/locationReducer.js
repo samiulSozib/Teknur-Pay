@@ -29,6 +29,9 @@ import {
   CURRENCIES_LIST_REQUEST,
   CURRENCIES_LIST_SUCCESS,
   CURRENCIES_LIST_FAIL,
+  GET_CUSTOM_RECHARGE_CONFIG_REQUEST,
+  GET_CUSTOM_RECHARGE_CONFIG_SUCCESS,
+  GET_CUSTOM_RECHARGE_CONFIG_FAIL,
 } from "../constants/locationConstant";
 
 const initialState = {
@@ -42,6 +45,7 @@ const initialState = {
   payment_methods:[],
   payment_types:[],
   currencies:[],
+  custom_recharge_info:{},
   error: null,
   loading: false,
 };
@@ -114,6 +118,14 @@ const locationReducer = (state = initialState, action) => {
     case CURRENCIES_LIST_SUCCESS:
       return { ...state, loading: false, currencies: action.payload.currencies };
     case CURRENCIES_LIST_FAIL:
+      return { ...state, loading: false, error: action.payload };
+
+
+      case GET_CUSTOM_RECHARGE_CONFIG_REQUEST:
+      return { ...state, loading: true };
+    case GET_CUSTOM_RECHARGE_CONFIG_SUCCESS:
+      return { ...state, loading: false, custom_recharge_info: action.payload };
+    case GET_CUSTOM_RECHARGE_CONFIG_FAIL:
       return { ...state, loading: false, error: action.payload };
 
 

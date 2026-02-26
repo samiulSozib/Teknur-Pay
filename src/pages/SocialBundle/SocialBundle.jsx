@@ -288,8 +288,10 @@ export default function SocialBundle() {
                     <span className="text-xs font-medium text-gray-600">{t('BUY')}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                    <span className="text-base font-bold text-gray-800">{selectedBundle?.selling_price}</span>
-                    <span className="text-xs font-medium text-purple-600">{user_info?.currency?.code}</span>
+                    <span className="text-base font-bold text-gray-800">
+                        {selectedBundle?.buying_price}
+                    </span>
+                    <span className="text-xs font-medium text-orange-500">{user_info?.currency?.code}</span>
                 </div>
             </div>
 
@@ -303,10 +305,9 @@ export default function SocialBundle() {
                     <span className="text-xs font-medium text-gray-600">{t('SELL')}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                    <span className="text-base font-bold text-gray-800">
-                        {selectedBundle?.buying_price}
-                    </span>
-                    <span className="text-xs font-medium text-orange-500">{user_info?.currency?.code}</span>
+                    
+                    <span className="text-base font-bold text-gray-800">{selectedBundle?.selling_price}</span>
+                    <span className="text-xs font-medium text-purple-600">{user_info?.currency?.code}</span>
                 </div>
             </div>
         </div>

@@ -382,6 +382,9 @@
     "PHONE_NUMBER_IS_REQUIRED": "شماره تلفن الزامی است",
   "PIN_IS_REQUIRED": "وارد کردن رمز الزامی است",
   "AFGHANISTAN_TOP_UP": "تاپ‌آپ افغانستان",
-  "ENTER_ID": "آیدی را وارد کنید..."
+  "ENTER_ID": "آیدی را وارد کنید...",
+   "SELLING_PRICE_NEW": "قیمت فروش",
+  "ADJUSTMENT": "تعدیل",
+  "BASE_AMOUNT": "مبلغ پایه"
 
 }

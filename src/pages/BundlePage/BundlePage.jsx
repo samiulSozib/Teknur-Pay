@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { Dialpad, Search } from "../../icons";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb"
+import { Handbag, PhoneCall, Tag } from "lucide-react";
 
 export default function BundlePage() {
   const [errorMessage, setErrorMessage] = useState("")
@@ -305,7 +306,7 @@ export default function BundlePage() {
     phone: "",
     email: "",
   });
-  
+
 
   return (
     <>
@@ -461,81 +462,81 @@ export default function BundlePage() {
               {/* pagination - only shows after bundles are loaded */}
               {bundleList.length > 0 && (
                 <div className={`flex flex-wrap items-center justify-end px-4 py-3 bg-white border-t-2 rounded-lg shadow-md space-x-4 ${isRtl ? 'rtl' : ''}`}>
-          {/* {t("")} selection */}
-          <div className={` flex items-center ${isRtl ? 'pl-2' : 'pr-2'} text-gray-600`}>
-            <span className={`${isRtl?'pl-2':'pr-2'}`}></span>
-            <select
-              className="p-1 px-2 min-w-[60px] text-gray-700 border rounded-md"
-              value={rowsPerPage}
-              onChange={(e) => {
-                setRowsPerPage(Number(e.target.value));
-                setPage(1); // Reset to first page when rows per page changes (recommended)
-              }}
-              dir="ltr"
-            >
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-            </select>
-          </div>
+                  {/* {t("")} selection */}
+                  <div className={` flex items-center ${isRtl ? 'pl-2' : 'pr-2'} text-gray-600`}>
+                    <span className={`${isRtl ? 'pl-2' : 'pr-2'}`}></span>
+                    <select
+                      className="p-1 px-2 min-w-[60px] text-gray-700 border rounded-md"
+                      value={rowsPerPage}
+                      onChange={(e) => {
+                        setRowsPerPage(Number(e.target.value));
+                        setPage(1); // Reset to first page when rows per page changes (recommended)
+                      }}
+                      dir="ltr"
+                    >
+                      <option value={10}>10</option>
+                      <option value={20}>20</option>
+                      <option value={50}>50</option>
+                    </select>
+                  </div>
 
-          {/* Pagination info */}
-          <div className={`text-gray-700 ${isRtl ? 'mx-4' : 'mx-4'}`} dir={isRtl ? "rtl" : "ltr"}>
-            {isRtl ? `${total_items} من ${to}-${from}` : `${from}-${to} of ${total_items}`}
-          </div>
+                  {/* Pagination info */}
+                  <div className={`text-gray-700 ${isRtl ? 'mx-4' : 'mx-4'}`} dir={isRtl ? "rtl" : "ltr"}>
+                    {isRtl ? `${total_items} من ${to}-${from}` : `${from}-${to} of ${total_items}`}
+                  </div>
 
-          {/* Navigation buttons */}
-          <div className={`flex items-center ${isRtl ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
-            <button
-              className={`p-2 ${page === 1
-                ? "text-gray-300"
-                : "text-gray-500 hover:text-gray-700"
-                }`}
-              onClick={isRtl ? goToNextPage : goToPreviousPage}
-              disabled={isRtl ? page === total_pages : page === 1}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                transform={isRtl ? "scale(-1,1)" : "none"}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-            <button
-              className={`p-2 ${(isRtl ? page === total_pages : page === 1)
-                ? "text-gray-300"
-                : "text-gray-700 hover:text-gray-900"
-                }`}
-              onClick={isRtl ? goToPreviousPage : goToNextPage}
-              disabled={isRtl ? page === 1 : page === total_pages}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                transform={isRtl ? "scale(-1,1)" : "none"}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
+                  {/* Navigation buttons */}
+                  <div className={`flex items-center ${isRtl ? 'space-x-reverse space-x-2' : 'space-x-2'}`}>
+                    <button
+                      className={`p-2 ${page === 1
+                        ? "text-gray-300"
+                        : "text-gray-500 hover:text-gray-700"
+                        }`}
+                      onClick={isRtl ? goToNextPage : goToPreviousPage}
+                      disabled={isRtl ? page === total_pages : page === 1}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        transform={isRtl ? "scale(-1,1)" : "none"}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      className={`p-2 ${(isRtl ? page === total_pages : page === 1)
+                        ? "text-gray-300"
+                        : "text-gray-700 hover:text-gray-900"
+                        }`}
+                      onClick={isRtl ? goToPreviousPage : goToNextPage}
+                      disabled={isRtl ? page === 1 : page === total_pages}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="w-4 h-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        transform={isRtl ? "scale(-1,1)" : "none"}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
               )}
             </>
           )}
@@ -544,116 +545,193 @@ export default function BundlePage() {
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-4 rounded-lg shadow-lg w-full sm:w-[90%] md:w-[80%] lg:w-80 text-left flex flex-col gap-4 ">
-            <div className="flex gap-2 border border-gray-300 p-2 rounded-md">
-              <img
-                className="w-[70px] h-[70px] rounded-lg object-contain"
-                src={selectedBundle?.service?.company?.company_logo}
-                alt="Company Logo"
-              />
+          <div className="bg-white p-4 rounded-xl shadow-xl w-80">
+            {/* Header with Company Info */}
+            <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg p-3">
+              <div className="flex flex-col items-center">
+                <img
+                  className="h-14 w-14 object-cover rounded-lg border-2 border-white shadow bg-white p-2"
+                  src={selectedBundle?.service?.company?.company_logo}
+                  alt={selectedBundle?.service?.company?.company_name}
+                />
+                <h2 className="font-bold mt-1 text-white text-center text-base">
+                  {selectedBundle?.service?.company?.company_name}
+                </h2>
+              </div>
 
-              <div className="flex flex-col w-full">
-                <div className="flex flex-row justify-between items-center">
-                  <span className="text-[14px] font-medium text-gray-800">{t("BUNDLE_TITLE")}</span>
-                  <span className="text-[12px] text-purple-600 font-medium">{selectedBundle?.bundle_title}</span>
-                </div>
-
-                <div className="flex flex-row justify-between items-center">
-                  <span className="text-[14px] font-semibold">{t("SELL")}</span>
-                  <span className="text-[12px] font-semibold text-gray-900">{selectedBundle?.selling_price} {user_info?.currency?.code}</span>
-                </div>
-
-                <div className="flex flex-row justify-between items-center">
-                  <span className="text-[14px] font-medium text-gray-800">{t("VALIDITY")}</span>
-                  <span className="text-[12px] text-purple-600 font-medium">{selectedBundle?.validity_type?.charAt(0).toUpperCase() + selectedBundle?.validity_type?.slice(1)}</span>
+              {/* Bundle Title Section */}
+              <div className="mt-2 flex justify-between bg-white/20 backdrop-blur-sm rounded-md p-1.5 items-center text-white">
+                <div className="text-white font-medium text-xs">{t('BUNDLE_TITLE')}</div>
+                <div className="font-bold text-white bg-white/30 px-2 py-0.5 rounded-full text-xs">
+                  {selectedBundle?.bundle_title}
                 </div>
               </div>
             </div>
 
-            <div className="border-2 border-gray-400 rounded-md p-2 mt-2 flex flex-col items-center gap-3">
-              <div className="relative w-full">
-                <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">
-                  <Dialpad className="h-[24px] w-[24px]" />
+            {/* Buy/Sale Section */}
+            <div className="mt-3 bg-gray-50 rounded-lg p-3 border border-gray-100">
+              <div className="flex justify-between items-center mb-2">
+                <div className="flex items-center gap-2">
+                  <div className="bg-purple-100 p-1.5 rounded-md">
+                    <Handbag className="h-4 w-4 text-purple-600" />
+                  </div>
+                  <span className="text-xs font-medium text-gray-600">{t('BUY')}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-base font-bold text-gray-800">
+                    {selectedBundle?.buying_price}
+                  </span>
+                  <span className="text-xs font-medium text-orange-500">{user_info?.currency?.code}</span>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-200 my-1.5"></div>
+
+              <div className="flex justify-between items-center pt-0.5">
+                <div className="flex items-center gap-2">
+                  <div className="bg-orange-100 p-1.5 rounded-md">
+                    <Tag className="h-4 w-4 text-orange-500" />
+                  </div>
+                  <span className="text-xs font-medium text-gray-600">{t('SELL')}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-base font-bold text-gray-800">{selectedBundle?.selling_price}</span>
+                  <span className="text-xs font-medium text-purple-600">{user_info?.currency?.code}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Validity Section */}
+            <div className="mt-3 bg-purple-50 rounded-lg p-2 border border-purple-100">
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-xs font-medium text-gray-600">{t('VALIDITY')}:</span>
+                <span className="text-xs font-semibold text-purple-700 bg-white px-3 py-1 rounded-full">
+                  {selectedBundle?.validity_type?.charAt(0).toUpperCase() + selectedBundle?.validity_type?.slice(1)}
                 </span>
-                {type == "social" && (
-                  <Input
-                    value={number}
-                    onChange={(e) => {
-                      setNumber(e.target.value);
+              </div>
+            </div>
+
+            {/* Enter Number Field */}
+            <div className="mt-3">
+              <div className="relative">
+                <div className="absolute left-2 top-1/2 -translate-y-1/2">
+                  <div className="bg-blue-100 p-1 rounded-md">
+                    <PhoneCall className="h-3.5 w-3.5 text-blue-600" />
+                  </div>
+                </div>
+                <input
+                  type={type === "social" ? "number" : "text"}
+                  inputMode={type === "social" ? "numeric" : "numeric"}
+                  pattern={type === "social" ? undefined : "[0-9]*"}
+                  placeholder={t('ENTER_YOUR_NUMBER')}
+                  value={number}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value.length <= phoneNumberLength) {
+                      if (type === "social") {
+                        setNumber(value);
+                      } else {
+                        handleNumberChange(e);
+                      }
                       if (modalErrors.number) {
                         setModalErrors({ ...modalErrors, number: "" });
                       }
-                    }}
-                    type="number"
-                    placeholder={t("ENTER_YOUR_NUMBER")}
-                    required
-                    error={Boolean(modalErrors.number)}
-                    hint={modalErrors.number}
-                    inputProps={{
-                      min: 0,
-                    }}
-                    className={`h-11 rounded-lg border ${modalErrors.number ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${modalErrors.number ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
-                  />
-                )}
-                {type == "nonsocial" && (
-                  <Input
-                    value={number}
+                    }
+                  }}
+                  className={`w-full p-2 pl-9 text-sm border rounded-lg focus:outline-none transition-all ${modalErrors.number || phoneNumberError
+                    ? 'border-red-300 bg-red-50 focus:border-red-500'
+                    : 'border-gray-200 bg-gray-50 focus:border-purple-500 focus:bg-white'
+                    }`}
+                  maxLength={phoneNumberLength}
+                />
+              </div>
+              {(modalErrors.number || phoneNumberError) && (
+                <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
+                  <span className="text-red-500 text-xs">●</span> {modalErrors.number || phoneNumberError}
+                </p>
+              )}
+            </div>
+
+            {/* PIN Field */}
+            <div className="mt-3">
+              <div className="flex justify-center">
+                <div className="relative w-[160px]">
+                  <div className="absolute left-2 top-1/2 -translate-y-1/2">
+                    <div className="bg-green-100 p-1 rounded-md">
+                      <svg className="h-3.5 w-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                      </svg>
+                    </div>
+                  </div>
+                  <input
+                    type="password"
+                    value={pin}
                     onChange={(e) => {
-                      const value = e.target.value;
-                      if (value.length <= phoneNumberLength) {
-                        handleNumberChange(e);
-                        if (modalErrors.number) {
-                          setModalErrors({ ...modalErrors, number: "" });
+                      const value = e.target.value.replace(/[^0-9]/g, '');
+                      if (value.length <= 4) {
+                        setPin(value);
+                        if (modalErrors.pin) {
+                          setModalErrors({ ...modalErrors, pin: "" });
                         }
                       }
                     }}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="[0-9]*"
-                    error={Boolean(modalErrors.number || phoneNumberError)}
-                    hint={modalErrors.number || phoneNumberError}
-                    placeholder={t("ENTER_YOUR_NUMBER")}
-                    helperText={modalErrors.number || phoneNumberError}
-                    required
-                    inputProps={{
-                      min: 0,
-                    }}
-                    className={`rounded-lg border ${(modalErrors.number || phoneNumberError) ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${(modalErrors.number || phoneNumberError) ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
+                    className={`w-full p-2 pl-9 text-center tracking-[6px] font-mono text-base border rounded-lg focus:outline-none transition-all ${modalErrors.pin
+                      ? 'border-red-300 bg-red-50 focus:border-red-500'
+                      : 'border-gray-200 bg-gray-50 focus:border-purple-500 focus:bg-white'
+                      }`}
+                    maxLength={4}
+                    placeholder="••••"
                   />
-                )}
+                </div>
               </div>
-              <div className="relative w-full">
-                <span className="absolute -translate-y-1/2 pointer-events-none left-4 top-1/2">
-                  <Dialpad className="h-[24px] w-[24px]" />
-                </span>
-
-                <Input
-                  value={pin}
-                  onChange={(e) => {
-                    setPin(e.target.value);
-                    if (modalErrors.pin) {
-                      setModalErrors({ ...modalErrors, pin: "" });
-                    }
-                  }}
-                  type="password"
-                  placeholder={t('ENTER_PIN')}
-                  required
-                  error={Boolean(modalErrors.pin)}
-                  hint={modalErrors.pin}
-                  maxLength={4}
-                  className={`rounded-lg border ${modalErrors.pin ? 'border-red-500' : 'border-gray-200'} bg-transparent py-2.5 pl-12 pr-14 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:outline-none focus:ring ${modalErrors.pin ? 'focus:border-red-500 focus:ring-red-500/10' : 'focus:border-brand-300 focus:ring-brand-500/10'} dark:border-gray-800 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800`}
-                />
-              </div>
+              {modalErrors.pin && (
+                <p className="text-red-500 text-xs mt-1 text-center flex items-center justify-center gap-1">
+                  <span className="text-red-500 text-xs">●</span> {modalErrors.pin}
+                </p>
+              )}
             </div>
 
+            {/* Error Message */}
+            {errorMessage && (
+              <div className="mt-3 p-2 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-600 text-xs flex items-center gap-1.5">
+                  <svg className="h-3.5 w-3.5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {errorMessage}
+                </p>
+              </div>
+            )}
+
+            {/* Buttons */}
             {loading ? (
-              <div className="flex items-center justify-center">
-                <div className="animate-spin h-10 w-10 border-4 border-gray-300 border-t-blue-600 rounded-full"></div>
+              <div className="flex justify-center py-3 mt-3">
+                <div className="animate-spin h-6 w-6 border-2 border-gray-200 border-t-purple-600 rounded-full"></div>
               </div>
             ) : (
-              <div className="flex flex-row justify-between mt-2">
-                <button onClick={checkPIN} className="bg-green-500 rounded-[50px] px-3 py-2 w-[100px] text-white">{t('CONFIRM')}</button>
-                <button onClick={handleCloseModal} className="bg-white text-red-500 px-3 py-2 w-[100px] border border-red-500 rounded-[50px]">{t("CANCEL")}</button>
+              <div className="flex gap-2 mt-4">
+                <button
+                  onClick={checkPIN}
+                  className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-2.5 rounded-lg font-medium text-sm hover:from-green-600 hover:to-green-700 transition-all shadow-sm shadow-green-500/30"
+                >
+                  <span className="flex items-center justify-center gap-1.5">
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {t('CONFIRM')}
+                  </span>
+                </button>
+                <button
+                  onClick={handleCloseModal}
+                  className="flex-1 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 py-2.5 rounded-lg font-medium text-sm hover:from-gray-200 hover:to-gray-300 transition-all border border-gray-300"
+                >
+                  <span className="flex items-center justify-center gap-1.5">
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    {t('CANCEL')}
+                  </span>
+                </button>
               </div>
             )}
           </div>

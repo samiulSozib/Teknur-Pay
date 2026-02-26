@@ -382,5 +382,8 @@
   "PHONE_NUMBER_IS_REQUIRED":"Phone Number is Required",
   "PIN_IS_REQUIRED":"PIN is Required",
   "AFGHANISTAN_TOP_UP":"Afghanistan Top Up",
-  "ENTER_ID":"Enter ID.."
+  "ENTER_ID":"Enter ID..",
+  "SELLING_PRICE_NEW":"Selling Price",
+  "ADJUSTMENT":"Adjustment",
+  "BASE_AMOUNT":"Base Amount"
 }

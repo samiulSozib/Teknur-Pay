@@ -30,7 +30,10 @@ import {
     PAYMENT_TYPE_LIST_FAIL,
     CURRENCIES_LIST_REQUEST,
     CURRENCIES_LIST_SUCCESS,
-    CURRENCIES_LIST_FAIL
+    CURRENCIES_LIST_FAIL,
+    GET_CUSTOM_RECHARGE_CONFIG_REQUEST,
+    GET_CUSTOM_RECHARGE_CONFIG_SUCCESS,
+    GET_CUSTOM_RECHARGE_CONFIG_FAIL
 } from "../constants/locationConstant";
 import { base_url } from "../../utils/const";
 
@@ -271,6 +274,31 @@ export const getCurrencies=()=>{
             dispatch({type:CURRENCIES_LIST_SUCCESS,payload:{currencies}})
         }catch(error){
             dispatch({type:CURRENCIES_LIST_FAIL,payload:error.message})
+        }
+    }
+}
+
+
+export const getCustomRechargeConfig=()=>{
+    return async (dispatch)=>{
+        
+        dispatch({type:GET_CUSTOM_RECHARGE_CONFIG_REQUEST})
+        try{
+            const token = localStorage.getItem('token');
+            const url=`${base_url}/get-afg-custom-recharge-config`
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}` 
+                }
+            };
+            const response=await axios.get(url,config)
+            //console.log(response)
+            const {data}=response.data
+            
+            //console.log(data)
+            dispatch({type:GET_CUSTOM_RECHARGE_CONFIG_SUCCESS,payload:data})
+        }catch(error){
+            dispatch({type:GET_CUSTOM_RECHARGE_CONFIG_FAIL,payload:error.message})
         }
     }
 }
