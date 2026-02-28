@@ -1217,6 +1217,80 @@ export default function CreditRecharge() {
           margin-top: 4px;
           padding-left: 2px;
         }
+
+        /* ── MOBILE RESPONSIVE ── */
+        .cr-send-card { padding: 24px 20px; }
+        .cr-form-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        .cr-price-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin-top: 20px;
+        }
+        .cr-filter-bar {
+          display: flex;
+          align-items: flex-end;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-bottom: 20px;
+        }
+        .cr-filter-actions {
+          display: flex;
+          gap: 8px;
+          flex-shrink: 0;
+          padding-top: 20px;
+        }
+        .cr-orders-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 12px;
+        }
+
+        @media (min-width: 640px) {
+          .cr-form-grid {
+            grid-template-columns: 1fr 1fr;
+          }
+          .cr-form-grid .cr-btn-col {
+            grid-column: span 2;
+          }
+        }
+        @media (min-width: 900px) {
+          .cr-form-grid {
+            grid-template-columns: 1fr 1fr auto;
+          }
+          .cr-form-grid .cr-btn-col {
+            grid-column: span 1;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .cr-send-card { padding: 20px 16px; border-radius: 16px; }
+          .cr-price-grid { grid-template-columns: 1fr; }
+          .cr-price-pill { padding: 12px 14px; }
+          .cr-filters-section { padding: 16px; border-radius: 12px; }
+          .cr-filter-actions { width: 100%; padding-top: 0; }
+          .cr-filter-btn { flex: 1; }
+          .cr-filter-bar { gap: 8px; }
+          .cr-orders-grid { grid-template-columns: 1fr; }
+          .cr-order-card { padding: 12px; }
+          .cr-modal { border-radius: 20px; }
+          .cr-modal-header { padding: 20px 16px 16px; }
+          .cr-modal-body { padding: 0 16px 16px; }
+          .cr-modal-actions { padding: 12px 16px; }
+          .cr-modal-close-btn { margin: 0 16px 16px; width: calc(100% - 32px); }
+          .cr-pagination { padding: 12px 16px; }
+        }
+
+        @media (max-width: 360px) {
+          .cr-send-card { padding: 16px 12px; }
+          h2 { font-size: 18px !important; }
+          .cr-input { height: 46px; font-size: 13px; }
+          .cr-send-btn { height: 46px; font-size: 13px; }
+        }
       `}</style>
 
       <div className="cr-root grid grid-cols-12 gap-4 md:gap-6">
@@ -1236,7 +1310,7 @@ export default function CreditRecharge() {
                 </h2>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+              <div className="cr-form-grid">
                 {/* Phone Number */}
                 <div>
                   <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 6, letterSpacing: '0.04em' }}>
@@ -1285,7 +1359,7 @@ export default function CreditRecharge() {
                 </div>
 
                 {/* Button */}
-                <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+                <div className="cr-btn-col" style={{ display: 'flex', alignItems: 'flex-end' }}>
                   <button onClick={handleRecharge} className="cr-send-btn" style={{ marginTop: 0 }}>
                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -1297,7 +1371,7 @@ export default function CreditRecharge() {
 
               {/* Price Pills */}
               {amount && custom_recharge_info && Object.keys(custom_recharge_info).length > 0 && (
-                <div style={{ marginTop: 20, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div className="cr-price-grid">
                   <div className="cr-price-pill buying">
                     <div>
                       <p style={{ fontSize: 11, color: '#F59E0B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', margin: 0 }}>{t('BUYING_PRICE')}</p>
@@ -1330,8 +1404,8 @@ export default function CreditRecharge() {
         <div className="col-span-12">
           <div className="cr-filters-section">
             {/* Filter Bar */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap', marginBottom: 20 }}>
-              <div style={{ flex: '1 1 160px' }}>
+            <div className="cr-filter-bar">
+              <div style={{ flex: '1 1 160px', minWidth: 0 }}>
                 <p className="cr-section-label" style={{ marginBottom: 6 }}>Filter by status</p>
                 <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="cr-select" style={{ width: '100%' }}>
                   <option value="">{t("ALL")}</option>
@@ -1340,7 +1414,7 @@ export default function CreditRecharge() {
                   <option value="2">{t("REJECTED")}</option>
                 </select>
               </div>
-              <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end', flexShrink: 0, paddingTop: 20 }}>
+              <div className="cr-filter-actions">
                 <button className="cr-filter-btn apply">{t("APPLY_FILTER")}</button>
                 <button onClick={() => setFilterStatus("")} className="cr-filter-btn clear">{t("CLEAR_FILTER")}</button>
               </div>
@@ -1359,7 +1433,7 @@ export default function CreditRecharge() {
             </div>
 
             {/* Order Cards */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
+            <div className="cr-orders-grid">
               {orderList.map((order, index) => {
                 const sc = statusConfig[order.status] || statusConfig[0];
                 return (
