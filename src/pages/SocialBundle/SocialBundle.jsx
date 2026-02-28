@@ -208,9 +208,10 @@ export default function SocialBundle() {
                   </div>
 
                   <div className="flex flex-row justify-between items-center">
-                    <span className="text-[12px] font-semibold">{t('SELL')}:</span>
-                    <span className="text-[12px] font-semibold text-gray-900">{bundle.selling_price} {user_info?.currency?.code}</span>
-                  </div>
+                        <span className="text-[12px] font-semibold text-red-600">{t('BUY')} : {bundle.buying_price} <span className="text-[10px]">{user_info?.currency?.code}</span></span>
+                        <span className="text-[12px] font-semibold text-green-600">{t('SELL')} : {bundle.selling_price} <span className="text-[10px]">{user_info?.currency?.code}</span></span>
+
+                      </div>
                 </div>
               </div>
             ))}
