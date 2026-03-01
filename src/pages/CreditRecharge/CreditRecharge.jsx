@@ -1373,25 +1373,15 @@ export default function CreditRecharge() {
               {amount && custom_recharge_info && Object.keys(custom_recharge_info).length > 0 && (
                 <div className="cr-price-grid">
                   <div className="cr-price-pill buying">
-                    <div>
-                      <p style={{ fontSize: 11, color: '#F59E0B', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', margin: 0 }}>{t('BUYING_PRICE')}</p>
-                      <p style={{ fontSize: 10, color: 'rgba(245,158,11,0.7)', margin: '2px 0 0' }}>
-                        {custom_recharge_info.adjust_type === "increase" ? "+" : "-"}{custom_recharge_info.adjust_value}% {t('ADJUSTMENT')}
-                      </p>
-                    </div>
+                    
                     <span className="cr-mono" style={{ fontSize: 20, fontWeight: 700, color: '#F59E0B' }}>
-                      {calculatedValues.buying.toFixed(2)}
+                      {calculatedValues.buying.toFixed(2)} {user_info?.currency?.code} 
                     </span>
                   </div>
                   <div className="cr-price-pill selling">
-                    <div>
-                      <p style={{ fontSize: 11, color: '#10B981', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', margin: 0 }}>{t('SELLING_PRICE_NEW')}</p>
-                      <p style={{ fontSize: 10, color: 'rgba(16,185,129,0.7)', margin: '2px 0 0' }}>
-                        {custom_recharge_info.selling_adjust_type === "increase" ? "+" : "-"}{custom_recharge_info.selling_adjust_value}% {t('ADJUSTMENT')}
-                      </p>
-                    </div>
+                    
                     <span className="cr-mono" style={{ fontSize: 20, fontWeight: 700, color: '#10B981' }}>
-                      {calculatedValues.selling.toFixed(2)}
+                      {calculatedValues.selling.toFixed(2)} {user_info?.currency?.code}
                     </span>
                   </div>
                 </div>
