@@ -276,7 +276,7 @@ export default function SocialBundle() {
                     alt={selectedBundle?.service?.company?.name}
                 />
                 <h2 className="font-bold mt-1 text-white text-center text-base">
-                    {selectedBundle?.service?.company?.name || "Clash of Clans"}
+                    {selectedBundle?.service?.company?.company_name}
                 </h2>
             </div>
 
@@ -337,12 +337,12 @@ export default function SocialBundle() {
                     value={number}
                     onChange={(e) => {
                         const value = e.target.value;
-                        if (value.length <= phoneNumberLength) {
+                        //if (value.length <= 20) {
                             setNumber(value);
                             if (modalErrors.number) {
                                 setModalErrors({ ...modalErrors, number: "" });
                             }
-                        }
+                        //}
                     }}
                     className={`w-full p-2 pl-9 text-sm border rounded-lg focus:outline-none transition-all ${modalErrors.number
                             ? 'border-red-300 bg-red-50 focus:border-red-500'
