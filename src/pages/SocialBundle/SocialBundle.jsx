@@ -85,11 +85,11 @@ export default function SocialBundle() {
   const validateModalFields = () => {
     let newErrors = {};
 
-    if (!number) {
-      newErrors.number = t('PHONE_NUMBER_IS_REQUIRED');
-    } else if (number.length !== parseInt(phoneNumberLength)) {
-      newErrors.number = `Number should be ${phoneNumberLength} digits.`;
-    }
+    // if (!number) {
+    //   newErrors.number = t('PHONE_NUMBER_IS_REQUIRED');
+    // } else if (number.length !== parseInt(phoneNumberLength)) {
+    //   newErrors.number = `Number should be ${phoneNumberLength} digits.`;
+    // }
 
     if (!pin) {
       newErrors.pin = t('PIN_IS_REQUIRED');
@@ -339,22 +339,16 @@ export default function SocialBundle() {
                         const value = e.target.value;
                         //if (value.length <= 20) {
                             setNumber(value);
-                            if (modalErrors.number) {
-                                setModalErrors({ ...modalErrors, number: "" });
-                            }
+                            // if (modalErrors.number) {
+                            //     setModalErrors({ ...modalErrors, number: "" });
+                            // }
                         //}
                     }}
-                    className={`w-full p-2 pl-9 text-sm border rounded-lg focus:outline-none transition-all ${modalErrors.number
-                            ? 'border-red-300 bg-red-50 focus:border-red-500'
-                            : 'border-gray-200 bg-gray-50 focus:border-purple-500 focus:bg-white'
+                    className={`w-full p-2 pl-9 text-sm border rounded-lg focus:outline-none transition-all border-gray-200 bg-gray-50 focus:border-purple-500 focus:bg-white'
                         }`}
                 />
             </div>
-            {modalErrors.number && (
-                <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
-                    <span className="text-red-500 text-xs">●</span> {modalErrors.number}
-                </p>
-            )}
+            
         </div>
 
         {/* PIN Field */}
