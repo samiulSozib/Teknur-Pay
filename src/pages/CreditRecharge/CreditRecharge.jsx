@@ -1455,13 +1455,13 @@ export default function CreditRecharge() {
               {convertedAmount > 0 && custom_recharge_info && Object.keys(custom_recharge_info).length > 0 && (
                 <div className="cr-price-grid">
                   <div className="cr-price-pill buying">
-                    <span style={{ fontSize: 13, fontWeight: 500, color: '#F59E0B', letterSpacing: '0.02em' }}>BUYING</span>
+                    <span style={{ fontSize: 13, fontWeight: 500, color: '#F59E0B', letterSpacing: '0.02em' }}>{t('BUYING')}</span>
                     <span className="cr-mono" style={{ fontSize: 20, fontWeight: 700, color: '#F59E0B' }}>
                       {calculatedValues.buying.toFixed(2)} {user_info?.currency?.code}
                     </span>
                   </div>
                   <div className="cr-price-pill selling">
-                    <span style={{ fontSize: 13, fontWeight: 500, color: '#10B981', letterSpacing: '0.02em' }}>SELLING</span>
+                    <span style={{ fontSize: 13, fontWeight: 500, color: '#10B981', letterSpacing: '0.02em' }}>{t('SELLING')}</span>
                     <span className="cr-mono" style={{ fontSize: 20, fontWeight: 700, color: '#10B981' }}>
                       {calculatedValues.selling.toFixed(2)} {user_info?.currency?.code}
                     </span>
