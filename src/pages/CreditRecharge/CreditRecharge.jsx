@@ -16,7 +16,7 @@
 //   const { t, i18n } = useTranslation();
 //   const isRtl = i18n.language === "ar" || i18n.language === "fa" || i18n.language === "ps";
 //   const [errorMessage,setErrorMessage]=useState("")
-  
+
 //   const dispatch=useDispatch()
 //   const {serviceList}=useSelector((state)=>state.serviceListReducer)
 //   const [amount,setAmount]=useState("")
@@ -35,7 +35,7 @@
 //   const [selectedOrder, setSelectedOrder] = useState(null);
 //   const [from, setForm] = useState(0);
 //   const [to, setTo] = useState(0);
-  
+
 //   // New state for calculated values
 //   const [calculatedValues, setCalculatedValues] = useState({
 //     buying: 0,
@@ -79,14 +79,14 @@
 //   useEffect(() => {
 //     if (amount && custom_recharge_info && Object.keys(custom_recharge_info).length > 0) {
 //       const base = parseFloat(amount) || 0;
-      
+
 //       // BUYING calculation
 //       const adjustPercent = parseFloat(custom_recharge_info.adjust_value) || 0;
 //       let buying = base;
 
 //       if (custom_recharge_info.adjust_mode === "percentage") {
 //         const adjustAmount = base * adjustPercent / 100;
-        
+
 //         if (custom_recharge_info.adjust_type === "increase") {
 //           buying = base + adjustAmount;
 //         } else if (custom_recharge_info.adjust_type === "decrease") {
@@ -100,7 +100,7 @@
 
 //       if (custom_recharge_info.selling_adjust_mode === "percentage") {
 //         const sellingAmount = buying * sellingPercent / 100;
-        
+
 //         if (custom_recharge_info.selling_adjust_type === "increase") {
 //           selling = buying + sellingAmount;
 //         } else if (custom_recharge_info.selling_adjust_type === "decrease") {
@@ -122,7 +122,7 @@
 
 //   useEffect(() => {
 //     const selectedCountry = countries.find(country => country.id === 9);
-    
+
 //     if (selectedCountry) {
 //       setPhoneNumberLength(selectedCountry.phone_number_length)
 //     }
@@ -214,7 +214,7 @@
 //       })
 //       return;
 //     }
-    
+
 //     Swal.fire({
 //       title: t('ARE_YOU_SURE_ABOUT_YOUR_TRANSFER'),
 //       showCancelButton: true,
@@ -243,8 +243,8 @@
 //         Swal.fire({
 //           html: `
 //             <div class="flex flex-col items-center">
-//               <img src="/images/img/approval.png" 
-//                    alt="Success" 
+//               <img src="/images/img/approval.png"
+//                    alt="Success"
 //                    class="w-20 mb-3" />
 //               <h3 class="text-green-600 font-bold text-lg text-center">
 //                 ${message}
@@ -266,8 +266,8 @@
 //         Swal.fire({
 //           html: `
 //             <div class="flex flex-col items-center">
-//               <img src="/images/img/red_cancel_icon.png" 
-//                    alt="Success" 
+//               <img src="/images/img/red_cancel_icon.png"
+//                    alt="Success"
 //                    class="w-20 mb-3" />
 //               <h3 class="text-green-600 font-bold text-lg text-center">
 //                 ${message}
@@ -385,11 +385,11 @@
 //                   </span>
 //                 </div>
 //                 <div className="text-xs text-orange-500 mt-1">
-//                   {custom_recharge_info.adjust_type === "increase" ? "+" : "-"} 
+//                   {custom_recharge_info.adjust_type === "increase" ? "+" : "-"}
 //                   {custom_recharge_info.adjust_value}% {t('ADJUSTMENT')}
 //                 </div>
 //               </div>
-              
+
 //               {/* Selling Price */}
 //               <div className="bg-white p-3 rounded-lg shadow-sm">
 //                 <div className="flex justify-between items-center">
@@ -399,13 +399,13 @@
 //                   </span>
 //                 </div>
 //                 <div className="text-xs text-green-500 mt-1">
-//                   {custom_recharge_info.selling_adjust_type === "increase" ? "+" : "-"} 
+//                   {custom_recharge_info.selling_adjust_type === "increase" ? "+" : "-"}
 //                   {custom_recharge_info.selling_adjust_value}% {t('ADJUSTMENT')}
 //                 </div>
 //               </div>
 //             </div>
-            
-            
+
+
 //           </div>
 //         )}
 //       </div>
@@ -689,18 +689,18 @@
 //   );
 // }
 
+
+import html2canvas from "html2canvas";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
-import { getOrders } from "../../redux/actions/orderAction";
-import { Dialpad } from "../../icons";
-import Input from "../../components/form/input/InputField";
-import { placeOrder, confirmPin, clearMessages, customRecharge } from '../../redux/actions/rechargeAction';
-import { getCountries, getCustomRechargeConfig } from "../../redux/actions/locationAction";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import html2canvas from "html2canvas";
+import { Dialpad } from "../../icons";
+import { getCountries, getCurrencies, getCustomRechargeConfig } from "../../redux/actions/locationAction";
+import { getOrders } from "../../redux/actions/orderAction";
+import { clearMessages, customRecharge } from '../../redux/actions/rechargeAction';
 
 export default function CreditRecharge() {
   const [expanded, setExpanded] = useState(null);
@@ -710,13 +710,13 @@ export default function CreditRecharge() {
 
   const dispatch = useDispatch();
   const { serviceList } = useSelector((state) => state.serviceListReducer);
-  const [amount, setAmount] = useState("");
+  const [amountInAFN, setAmountInAFN] = useState(""); // Amount in Afghani
   const [countryId, setCountryId] = useState("9");
   const [number, setNumber] = useState("");
   const [phoneNumberError, setPhoneNumberError] = useState("");
   const [phoneNumberLength, setPhoneNumberLength] = useState("10");
   const { message, error, orderPlaced } = useSelector((state) => state.rechargeReducer);
-  const { countries, custom_recharge_info } = useSelector((state) => state.locationReducer);
+  const { countries, custom_recharge_info, currencies } = useSelector((state) => state.locationReducer);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filterStatus, setFilterStatus] = useState("");
@@ -726,6 +726,13 @@ export default function CreditRecharge() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [from, setForm] = useState(0);
   const [to, setTo] = useState(0);
+
+  // Store rates for currency conversion
+  const [afghanRate, setAfghanRate] = useState(1);
+  const [userRate, setUserRate] = useState(1);
+
+  // Converted amount in user's currency
+  const [convertedAmount, setConvertedAmount] = useState(0);
 
   const [calculatedValues, setCalculatedValues] = useState({ buying: 0, selling: 0 });
 
@@ -740,43 +747,86 @@ export default function CreditRecharge() {
     }
   }, [current_page, per_page, total_items]);
 
-  const goToPreviousPage = () => { if (page > 1) setPage(page - 1); };
-  const goToNextPage = () => { if (page < total_pages) setPage(page + 1); };
+  const goToPreviousPage = () => { if (page > 0) setPage(page - 1); };
+  const goToNextPage = () => { if (page + 1 < total_pages) setPage(page + 1); };
 
   useEffect(() => {
+    dispatch(getCurrencies());
     dispatch(getCountries());
     dispatch(getCustomRechargeConfig());
   }, [dispatch]);
 
+  // Fetch currencies and extract rates
   useEffect(() => {
-    if (custom_recharge_info) console.log(custom_recharge_info.adjust_type);
-  }, [dispatch, custom_recharge_info]);
+    if (currencies && currencies.length > 0) {
+      // Find AFN currency (Afghani)
+      const afghanCurrency = currencies.find(currency => currency.code === "AFN");
+      if (afghanCurrency) {
+        setAfghanRate(parseFloat(afghanCurrency.exchange_rate_per_usd) || 1);
+      }
 
+      // Find user's currency based on user_info
+      if (user_info?.currency?.code) {
+        const userCurrency = currencies.find(
+          currency => currency.code === user_info?.currency?.code
+        );
+        if (userCurrency) {
+          setUserRate(parseFloat(userCurrency.exchange_rate_per_usd) || 1);
+        }
+      } else if (currencies.length > 0) {
+        // Fallback to first currency if user currency not found
+        setUserRate(parseFloat(currencies[0].exchange_rate_per_usd) || 1);
+      }
+    }
+  }, [currencies, user_info]);
+
+  // Convert AFN to user's currency (AFN → USD → User Currency)
   useEffect(() => {
-    if (amount && custom_recharge_info && Object.keys(custom_recharge_info).length > 0) {
-      const base = parseFloat(amount) || 0;
+    if (amountInAFN && afghanRate && userRate) {
+      const afnAmount = parseFloat(amountInAFN) || 0;
+      // Convert AFN to USD first, then to user's currency
+      const amountInUSD = afnAmount / afghanRate;
+      const converted = amountInUSD * userRate;
+      setConvertedAmount(converted);
+    } else {
+      setConvertedAmount(0);
+    }
+  }, [amountInAFN, afghanRate, userRate]);
+
+  // Calculate buying and selling based on converted amount
+  useEffect(() => {
+    if (convertedAmount > 0 && custom_recharge_info && Object.keys(custom_recharge_info).length > 0) {
+      const base = convertedAmount;
       const adjustPercent = parseFloat(custom_recharge_info.adjust_value) || 0;
       let buying = base;
+
       if (custom_recharge_info.adjust_mode === "percentage") {
         const adjustAmount = base * adjustPercent / 100;
-        buying = custom_recharge_info.adjust_type === "increase" ? base + adjustAmount : base - adjustAmount;
+        buying = custom_recharge_info.adjust_type === "increase"
+          ? base + adjustAmount
+          : base - adjustAmount;
       }
+
       const sellingPercent = parseFloat(custom_recharge_info.selling_adjust_value) || 0;
       let selling = buying;
+
       if (custom_recharge_info.selling_adjust_mode === "percentage") {
         const sellingAmount = buying * sellingPercent / 100;
-        selling = custom_recharge_info.selling_adjust_type === "increase" ? buying + sellingAmount : buying - sellingAmount;
+        selling = custom_recharge_info.selling_adjust_type === "increase"
+          ? buying + sellingAmount
+          : buying - sellingAmount;
       }
+
       setCalculatedValues({ buying, selling });
     } else {
       setCalculatedValues({ buying: 0, selling: 0 });
     }
-  }, [amount, custom_recharge_info]);
+  }, [convertedAmount, custom_recharge_info]);
 
   useEffect(() => {
     const selectedCountry = countries.find(country => country.id === 9);
     if (selectedCountry) setPhoneNumberLength(selectedCountry.phone_number_length);
-  }, [dispatch, countries, phoneNumberLength, countryId]);
+  }, [countries, countryId]);
 
   const modalRef = useRef(null);
 
@@ -817,8 +867,16 @@ export default function CreditRecharge() {
     else if (value.length === parseInt(phoneNumberLength)) setPhoneNumberError("");
   };
 
+  const handleAmountChange = (e) => {
+    const value = e.target.value;
+    // Allow only numbers and decimal
+    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+      setAmountInAFN(value);
+    }
+  };
+
   const handleRecharge = () => {
-    if (!number || !amount) {
+    if (!number || !amountInAFN) {
       toast.error('Number and amount are required!');
       Swal.fire({
         title: t('ENTER_REQUIRED_FIELDS'), showCancelButton: true, showConfirmButton: true,
@@ -833,18 +891,27 @@ export default function CreditRecharge() {
       confirmButtonText: t("CONFIRMATION"), cancelButtonText: t("CANCEL"),
       customClass: { popup: "rounded-xl p-6", title: "text-lg font-semibold text-gray-900", confirmButton: "bg-green-600 hover:bg-green-700 text-white font-medium rounded-full px-6 py-2 shadow-md mr-2", cancelButton: "bg-white border border-gray-300 text-gray-900 font-medium rounded-full px-6 py-2 shadow-md" },
       buttonsStyling: false,
-    }).then((result) => { if (result.isConfirmed) dispatch(customRecharge(9, number, amount)); });
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Send amount in AFN (original currency) to the API
+        dispatch(customRecharge(9, number, amountInAFN));
+      }
+    });
   };
 
   useEffect(() => {
     if (message || error) {
       if (orderPlaced) {
         Swal.fire({ html: `<div class="flex flex-col items-center"><img src="/images/img/approval.png" alt="Success" class="w-20 mb-3"/><h3 class="text-green-600 font-bold text-lg text-center">${message}</h3></div>`, showConfirmButton: true, confirmButtonText: "Close", customClass: { popup: "rounded-xl p-6", confirmButton: "bg-white border border-gray-300 text-gray-900 font-medium rounded-full px-6 py-2 shadow-md" } });
-        setNumber(''); setAmount(''); dispatch(clearMessages());
+        setNumber('');
+        setAmountInAFN('');
+        dispatch(clearMessages());
       }
       if (error) {
         Swal.fire({ html: `<div class="flex flex-col items-center"><img src="/images/img/red_cancel_icon.png" alt="Error" class="w-20 mb-3"/><h3 class="text-green-600 font-bold text-lg text-center">${message}</h3></div>`, showConfirmButton: true, confirmButtonText: "CLOSE", customClass: { popup: "rounded-xl p-6", confirmButton: "bg-white border border-gray-300 text-gray-900 font-medium rounded-full px-6 py-2 shadow-md" } });
-        dispatch(clearMessages()); setErrorMessage(error); dispatch(clearMessages());
+        dispatch(clearMessages());
+        setErrorMessage(error);
+        dispatch(clearMessages());
       }
     }
   }, [dispatch, orderPlaced, error, message]);
@@ -860,11 +927,15 @@ export default function CreditRecharge() {
     2: { label: t('REJECTED'), color: '#EF4444', bg: '#FEF2F2', border: '#FECACA', dot: 'bg-red-400' },
   };
 
+  // Get currency symbols
+  const userCurrencySymbol = user_info?.currency?.symbol || user_info?.currency?.code || "$";
+  const afnSymbol = "AFN";
+
   return (
     <>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-        
+
         .cr-root { font-family: 'Sora', sans-serif; }
         .cr-mono { font-family: 'JetBrains Mono', monospace; }
 
@@ -1336,50 +1407,61 @@ export default function CreditRecharge() {
                   {phoneNumberError && <p className="cr-error-hint">⚠ {phoneNumberError}</p>}
                 </div>
 
-                {/* Amount */}
+                {/* Amount in AFN */}
                 <div>
                   <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.5)', marginBottom: 6, letterSpacing: '0.04em' }}>
-                    {t('ENTER_TRANSFER_AMOUNT')}
+                    {t('ENTER_TRANSFER_AMOUNT')} (AFN)
                   </label>
                   <div className="cr-input-wrapper">
                     <span className="cr-input-icon">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v2m0 8v2M9 10h6M9 14h6"/></svg>
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 6v2m0 8v2M9 10h6M9 14h6"/>
+                      </svg>
                     </span>
                     <input
-                      value={amount}
+                      value={amountInAFN}
                       type="text"
                       inputMode="numeric"
                       pattern="[0-9]*"
                       placeholder="0.00"
-                      onChange={(e) => setAmount(e.target.value)}
+                      onChange={handleAmountChange}
                       className="cr-input cr-mono"
                     />
-                    <span className="cr-input-suffix">{user_info?.currency?.code}</span>
+                    <span className="cr-input-suffix">AFN</span>
                   </div>
+                  {/* {convertedAmount > 0 && (
+                    <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 6, fontFamily: 'JetBrains Mono, monospace' }}>
+                      ≈ {userCurrencySymbol} {convertedAmount.toFixed(2)} {user_info?.currency?.code}
+                    </p>
+                  )} */}
                 </div>
 
                 {/* Button */}
                 <div className="cr-btn-col" style={{ display: 'flex', alignItems: 'flex-end' }}>
                   <button onClick={handleRecharge} className="cr-send-btn" style={{ marginTop: 0 }}>
                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                      </svg>
                       {t('SEND_TO_DESTINATION')}
                     </span>
                   </button>
                 </div>
               </div>
 
-              {/* Price Pills */}
-              {amount && custom_recharge_info && Object.keys(custom_recharge_info).length > 0 && (
+              {/* Price Pills - Now showing in user's currency */}
+              {convertedAmount > 0 && custom_recharge_info && Object.keys(custom_recharge_info).length > 0 && (
                 <div className="cr-price-grid">
                   <div className="cr-price-pill buying">
-                    
+                    <span style={{ fontSize: 13, fontWeight: 500, color: '#F59E0B', letterSpacing: '0.02em' }}>BUYING</span>
                     <span className="cr-mono" style={{ fontSize: 20, fontWeight: 700, color: '#F59E0B' }}>
-                      {calculatedValues.buying.toFixed(2)} {user_info?.currency?.code} 
+                      {calculatedValues.buying.toFixed(2)} {user_info?.currency?.code}
                     </span>
                   </div>
                   <div className="cr-price-pill selling">
-                    
+                    <span style={{ fontSize: 13, fontWeight: 500, color: '#10B981', letterSpacing: '0.02em' }}>SELLING</span>
                     <span className="cr-mono" style={{ fontSize: 20, fontWeight: 700, color: '#10B981' }}>
                       {calculatedValues.selling.toFixed(2)} {user_info?.currency?.code}
                     </span>
@@ -1405,8 +1487,25 @@ export default function CreditRecharge() {
                 </select>
               </div>
               <div className="cr-filter-actions">
-                <button className="cr-filter-btn apply">{t("APPLY_FILTER")}</button>
-                <button onClick={() => setFilterStatus("")} className="cr-filter-btn clear">{t("CLEAR_FILTER")}</button>
+                <button
+                  onClick={() => {
+                    setPage(0);
+                    dispatch(getOrders(1, rowsPerPage, filterStatus, "custom_recharge"));
+                  }}
+                  className="cr-filter-btn apply"
+                >
+                  {t("APPLY_FILTER")}
+                </button>
+                <button
+                  onClick={() => {
+                    setFilterStatus("");
+                    setPage(0);
+                    dispatch(getOrders(1, rowsPerPage, "", "custom_recharge"));
+                  }}
+                  className="cr-filter-btn clear"
+                >
+                  {t("CLEAR_FILTER")}
+                </button>
               </div>
             </div>
 
@@ -1424,56 +1523,64 @@ export default function CreditRecharge() {
 
             {/* Order Cards */}
             <div className="cr-orders-grid">
-              {orderList.map((order, index) => {
-                const sc = statusConfig[order.status] || statusConfig[0];
-                return (
-                  <div key={index} className="cr-order-card" onClick={() => handleClickOpen(order)}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
-                      <img
-                        className="cr-order-logo"
-                        src={order?.bundle?.service?.company?.company_logo}
-                        alt={order?.bundle?.service?.company?.name}
-                      />
-                      <div style={{ minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                          <span style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>#{order.id}</span>
-                          <span className="cr-status-badge" style={{ background: sc.bg, color: sc.color, border: `1px solid ${sc.border}` }}>
-                            <span className={`cr-status-dot`} style={{ background: sc.color }}></span>
-                            {sc.label}
-                          </span>
+              {orderList && orderList.length > 0 ? (
+                orderList.map((order, index) => {
+                  const sc = statusConfig[order.status] || statusConfig[0];
+                  return (
+                    <div key={index} className="cr-order-card" onClick={() => handleClickOpen(order)}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+                        <img
+                          className="cr-order-logo"
+                          src={order?.bundle?.service?.company?.company_logo}
+                          alt={order?.bundle?.service?.company?.name}
+                        />
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                            <span style={{ fontSize: 13, fontWeight: 600, color: '#1E293B' }}>#{order.id}</span>
+                            <span className="cr-status-badge" style={{ background: sc.bg, color: sc.color, border: `1px solid ${sc.border}` }}>
+                              <span className={`cr-status-dot`} style={{ background: sc.color }}></span>
+                              {sc.label}
+                            </span>
+                          </div>
+                          <p className="cr-mono" style={{ margin: 0, fontSize: 12, color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {order.rechargeble_account}
+                          </p>
                         </div>
-                        <p className="cr-mono" style={{ margin: 0, fontSize: 12, color: '#64748B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {order.rechargeble_account}
-                        </p>
                       </div>
+                      <button
+                        className="cr-see-more-btn"
+                        onClick={(e) => { e.stopPropagation(); setExpanded(expanded === order.id ? null : order.id); }}
+                      >
+                        {expanded === order.id ? "▲" : "▼"}
+                      </button>
                     </div>
-                    <button
-                      className="cr-see-more-btn"
-                      onClick={(e) => { e.stopPropagation(); setExpanded(expanded === order.id ? null : order.id); }}
-                    >
-                      {expanded === order.id ? "▲" : "▼"}
-                    </button>
-                  </div>
-                );
-              })}
+                  );
+                })
+              ) : (
+                <div style={{ textAlign: 'center', padding: '40px', color: '#94A3B8' }}>
+                  No orders found
+                </div>
+              )}
             </div>
 
             {/* Pagination */}
-            <div className="cr-pagination" style={{ marginTop: 16 }}>
-              <span style={{ fontSize: 12, color: '#94A3B8' }}>
-                {from}–{to} of {total_items}
-              </span>
-              <button className="cr-pagination-btn" onClick={goToPreviousPage} disabled={page === 1}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button className="cr-pagination-btn" onClick={goToNextPage} disabled={page === total_pages}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-            </div>
+            {total_pages > 1 && (
+              <div className="cr-pagination" style={{ marginTop: 16 }}>
+                <span style={{ fontSize: 12, color: '#94A3B8' }}>
+                  {from}–{to} of {total_items}
+                </span>
+                <button className="cr-pagination-btn" onClick={goToPreviousPage} disabled={page === 0}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button className="cr-pagination-btn" onClick={goToNextPage} disabled={page + 1 >= total_pages}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -1500,8 +1607,8 @@ export default function CreditRecharge() {
                   {/* Info rows */}
                   <div className="cr-modal-body">
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '16px 0 12px' }}>
-                      <img src={selectedOrder?.bundle.service.company.company_logo} alt="Co Logo" style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'contain', border: '1px solid #F1F5F9' }} />
-                      <span style={{ fontSize: 14, fontWeight: 600, color: '#1E293B' }}>{selectedOrder.bundle.bundle_title}</span>
+                      <img src={selectedOrder?.bundle?.service?.company?.company_logo} alt="Co Logo" style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'contain', border: '1px solid #F1F5F9' }} />
+                      <span style={{ fontSize: 14, fontWeight: 600, color: '#1E293B' }}>{selectedOrder.bundle?.bundle_title}</span>
                     </div>
                     <hr style={{ border: 'none', borderTop: '1px solid #F1F5F9', margin: '0 0 4px' }} />
 
@@ -1511,7 +1618,7 @@ export default function CreditRecharge() {
                       { label: t("TIME"), value: new Date(selectedOrder?.created_at).toLocaleTimeString() },
                       { label: t("PHONE_NUMBER"), value: selectedOrder.rechargeble_account, mono: true },
                       { label: t("SENDER"), value: selectedOrder.performed_by_name },
-                      { label: t("PRICE"), value: `${user_info?.currency?.code} ${selectedOrder.bundle.selling_price}`, mono: true, accent: true },
+                      { label: t("PRICE"), value: `${user_info?.currency?.code} ${selectedOrder.bundle?.selling_price}`, mono: true, accent: true },
                     ].map(({ label, value, mono, accent }) => (
                       <div key={label} className="cr-modal-row">
                         <span className="cr-modal-label">{label}</span>
@@ -1527,13 +1634,23 @@ export default function CreditRecharge() {
                 <div className="cr-modal-actions">
                   <button onClick={handleShare} className="cr-modal-action-btn share">
                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <circle cx="18" cy="5" r="3"/>
+                        <circle cx="6" cy="12" r="3"/>
+                        <circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                      </svg>
                       {t("SHARE")}
                     </span>
                   </button>
                   <button onClick={handleDownload} className="cr-modal-action-btn download">
                     <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                      </svg>
                       {t("DOWNLOAD")}
                     </span>
                   </button>
