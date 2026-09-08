@@ -1,7 +1,7 @@
 import axios from "axios";
-import { 
-    PLACE_ORDER_REQUEST, 
-    PLACE_ORDER_SUCCESS, 
+import {
+    PLACE_ORDER_REQUEST,
+    PLACE_ORDER_SUCCESS,
     PLACE_ORDER_FAIL,
     CONFIRM_PIN_REQUEST,
     CONFIRM_PIN_SUCCESS,
@@ -33,7 +33,7 @@ export const confirmPin = (pin, bundle_id,rechargeble_account) => {
 
             //console.log(response)
             dispatch({ type: CONFIRM_PIN_SUCCESS, payload: message });
-            
+
 
             dispatch(placeOrder(bundle_id, rechargeble_account));
 
@@ -44,7 +44,7 @@ export const confirmPin = (pin, bundle_id,rechargeble_account) => {
     };
 };
 
-export const placeOrder = (bundle_id, rechargeble_account) => {
+export const placeOrder = (bundle_id, rechargeble_account, pin) => {
     return async (dispatch) => {
         dispatch({ type: PLACE_ORDER_REQUEST });
 
@@ -59,7 +59,8 @@ export const placeOrder = (bundle_id, rechargeble_account) => {
             };
             const body = {
                 bundle_id: bundle_id,
-                rechargeble_account: rechargeble_account
+                rechargeble_account: rechargeble_account,
+                pin: pin
             };
             const response = await axios.post(place_order_url, body, config);
             const message = response.data.message;
@@ -67,12 +68,12 @@ export const placeOrder = (bundle_id, rechargeble_account) => {
 
             dispatch({ type: PLACE_ORDER_SUCCESS, payload: message });
 
-            
+
 
         } catch (error) {
             const errorMessage = error.response ? error.response.data.message : "An error occurred";
             dispatch({ type: PLACE_ORDER_FAIL, payload: errorMessage });
-            
+
         }
     };
 };
@@ -80,7 +81,7 @@ export const placeOrder = (bundle_id, rechargeble_account) => {
 export const customRecharge=(countryId,rechargeble_account,amount)=>{
     return async (dispatch) => {
         dispatch({ type: PLACE_CUSTOM_RECHARGE_REQUEST });
-        
+
         try {
             const token = localStorage.getItem('token');
             const place_recharge_url = `${base_url}/custom-recharge`;
@@ -103,7 +104,7 @@ export const customRecharge=(countryId,rechargeble_account,amount)=>{
 
             dispatch({ type: PLACE_CUSTOM_RECHARGE_SUCCESS, payload: message });
             //console.log(response)
-            
+
 
         } catch (error) {
             const errorMessage = error.response ? error.response.data.message : "An error occurred";

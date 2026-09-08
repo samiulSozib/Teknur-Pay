@@ -1011,7 +1011,7 @@ const filteredServiceList = useMemo(() => {
   // Update checkPIN function
   const checkPIN = () => {
     if (validateModalFields()) {
-      dispatch(confirmPin(pin, selectedBundle.id, number))
+      dispatch(placeOrder(selectedBundle.id, number, pin))
     }
   }
 

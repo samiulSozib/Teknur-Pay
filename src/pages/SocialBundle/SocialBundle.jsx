@@ -103,7 +103,7 @@ export default function SocialBundle() {
 
   const checkPIN = () => {
     if (validateModalFields()) {
-      dispatch(confirmPin(pin, selectedBundle.id, number))
+      dispatch(placeOrder(selectedBundle.id, number, pin))
     }
   }
 
@@ -113,8 +113,8 @@ export default function SocialBundle() {
         Swal.fire({
           html: `
                         <div class="flex flex-col items-center">
-                            <img src="/images/img/approval.png" 
-                                alt="Success" 
+                            <img src="/images/img/approval.png"
+                                alt="Success"
                                 class="w-20 mb-3" />
                             <h3 class="text-green-600 font-bold text-lg text-center">
                                 ${message}
@@ -190,7 +190,7 @@ export default function SocialBundle() {
 
         <div className="col-span-12 space-y-6 xl:col-span-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          
+
           </div>
         </div>
 
@@ -316,7 +316,7 @@ export default function SocialBundle() {
                     <span className="text-xs font-medium text-gray-600">{t('SELL')}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                    
+
                     <span className="text-base font-bold text-gray-800">{selectedBundle?.selling_price}</span>
                     <span className="text-xs font-medium text-purple-600">{user_info?.currency?.code}</span>
                 </div>
@@ -348,7 +348,7 @@ export default function SocialBundle() {
                         }`}
                 />
             </div>
-            
+
         </div>
 
         {/* PIN Field */}
