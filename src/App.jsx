@@ -1,55 +1,57 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
-import SignIn from "./pages/AuthPages/SignIn";
-import SignUp from "./pages/AuthPages/SignUp";
-import NotFound from "./pages/OtherPage/NotFound";
-import UserProfiles from "./pages/UserProfiles";
-import Videos from "./pages/UiElements/Videos";
-import Images from "./pages/UiElements/Images";
-import Alerts from "./pages/UiElements/Alerts";
-import Badges from "./pages/UiElements/Badges";
-import Avatars from "./pages/UiElements/Avatars";
-import Buttons from "./pages/UiElements/Buttons";
-import LineChart from "./pages/Charts/LineChart";
-import BarChart from "./pages/Charts/BarChart";
-import Calendar from "./pages/Calendar";
-import BasicTables from "./pages/Tables/BasicTables";
-import FormElements from "./pages/Forms/FormElements";
-import Blank from "./pages/Blank";
+const SignIn = lazy(() => import("./pages/AuthPages/SignIn"));
+const SignUp = lazy(() => import("./pages/AuthPages/SignUp"));
+const NotFound = lazy(() => import("./pages/OtherPage/NotFound"));
+const UserProfiles = lazy(() => import("./pages/UserProfiles"));
+const Videos = lazy(() => import("./pages/UiElements/Videos"));
+const Images = lazy(() => import("./pages/UiElements/Images"));
+const Alerts = lazy(() => import("./pages/UiElements/Alerts"));
+const Badges = lazy(() => import("./pages/UiElements/Badges"));
+const Avatars = lazy(() => import("./pages/UiElements/Avatars"));
+const Buttons = lazy(() => import("./pages/UiElements/Buttons"));
+const LineChart = lazy(() => import("./pages/Charts/LineChart"));
+const BarChart = lazy(() => import("./pages/Charts/BarChart"));
+const Calendar = lazy(() => import("./pages/Calendar"));
+const BasicTables = lazy(() => import("./pages/Tables/BasicTables"));
+const FormElements = lazy(() => import("./pages/Forms/FormElements"));
+const Blank = lazy(() => import("./pages/Blank"));
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
-import Home from "./pages/Dashboard/Home";
-import ProductsAndPackages from "./pages/ProductsAndPackage/ProductsAndPackages";
-import InternetPackage from './pages/Internet/InternetPackage'
-import SocialPackage from "./pages/Social/SocialPackage";
-import SocialBundle from "./pages/SocialBundle/SocialBundle";
-import CreditRecharge from "./pages/CreditRecharge/CreditRecharge";
-import Transaction from "./pages/Transactions/transactions";
-import Order from "./pages/Order/Order";
-import SubReseller from "./pages/SubReseller/SubReseller";
-import Profile from "./pages/Profile/Profile";
-import AddSubReseller from "./pages/SubReseller/AddSubReseller";
-import { SetPassword } from "./pages/SubReseller/SetPassword";
-import { ChangeBalance } from "./pages/SubReseller/ChangeBalance";
+const Home = lazy(() => import("./pages/Dashboard/Home"));
+const ProductsAndPackages = lazy(() => import("./pages/ProductsAndPackage/ProductsAndPackages"));
+const InternetPackage = lazy(() => import("./pages/Internet/InternetPackage"));
+const SocialPackage = lazy(() => import("./pages/Social/SocialPackage"));
+const SocialBundle = lazy(() => import("./pages/SocialBundle/SocialBundle"));
+const CreditRecharge = lazy(() => import("./pages/CreditRecharge/CreditRecharge"));
+const Transaction = lazy(() => import("./pages/Transactions/transactions"));
+const Order = lazy(() => import("./pages/Order/Order"));
+const SubReseller = lazy(() => import("./pages/SubReseller/SubReseller"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const AddSubReseller = lazy(() => import("./pages/SubReseller/AddSubReseller"));
+const SetPassword = lazy(() => import("./pages/SubReseller/SetPassword").then((m) => ({ default: m.SetPassword })));
+const ChangeBalance = lazy(() => import("./pages/SubReseller/ChangeBalance").then((m) => ({ default: m.ChangeBalance })));
 import ProtectedRoute from "./components/auth/ProtectedRoute";
-import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
-import HelpCenter from "./pages/HelpCenter/HelpCeneter";
-import { SellingPrice } from "./pages/SellingPrice/SellingPrice";
-import { CommissionGroup } from "./pages/ComissionGroup/ComissionGroup";
-import HawalaOrders from "./pages/HawalaOrders/Order";
-import HelpArticles from "./pages/HelpArticles/HelpArticles";
-import { ResellerPayment } from "./pages/ResellerPayment/ResellerPayment";
-import TransactionsType from "./pages/TransactionsType/TransactionsType";
-import MoneyExchangeRate from "./pages/MoneyExchangeRate/MoneyExchangeRate";
-import CountryViewPage from "./pages/CountryViewPage/CountryViewPage";
-import BundlePage from "./pages/BundlePage/BundlePage";
-import { LoanRequest } from "./pages/LoanRequest/LoanRequest";
-import { TransferCommissions } from "./pages/TransferCommissions/TransferCommissions";
+const TermsAndConditions = lazy(() => import("./pages/TermsAndConditions/TermsAndConditions"));
+const HelpCenter = lazy(() => import("./pages/HelpCenter/HelpCeneter"));
+const SellingPrice = lazy(() => import("./pages/SellingPrice/SellingPrice").then((m) => ({ default: m.SellingPrice })));
+const CommissionGroup = lazy(() => import("./pages/ComissionGroup/ComissionGroup").then((m) => ({ default: m.CommissionGroup })));
+const HawalaOrders = lazy(() => import("./pages/HawalaOrders/Order"));
+const HelpArticles = lazy(() => import("./pages/HelpArticles/HelpArticles"));
+const ResellerPayment = lazy(() => import("./pages/ResellerPayment/ResellerPayment").then((m) => ({ default: m.ResellerPayment })));
+const TransactionsType = lazy(() => import("./pages/TransactionsType/TransactionsType"));
+const MoneyExchangeRate = lazy(() => import("./pages/MoneyExchangeRate/MoneyExchangeRate"));
+const CountryViewPage = lazy(() => import("./pages/CountryViewPage/CountryViewPage"));
+const BundlePage = lazy(() => import("./pages/BundlePage/BundlePage"));
+const LoanRequest = lazy(() => import("./pages/LoanRequest/LoanRequest").then((m) => ({ default: m.LoanRequest })));
+const TransferCommissions = lazy(() => import("./pages/TransferCommissions/TransferCommissions").then((m) => ({ default: m.TransferCommissions })));
 
 export default function App() {
   return (
     <>
       <Router>
         <ScrollToTop />
+        <Suspense fallback={<div className="flex h-screen items-center justify-center"><div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-500 border-t-transparent" /></div>}>
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
@@ -120,6 +122,7 @@ export default function App() {
           {/* Fallback Route */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
       </Router>
     </>
   );
