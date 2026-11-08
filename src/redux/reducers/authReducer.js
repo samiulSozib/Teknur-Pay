@@ -1,7 +1,12 @@
+const safeParse=(key)=>{
+    try{ return JSON.parse(localStorage.getItem(key)) }
+    catch{ localStorage.removeItem(key); return null }
+}
+
 const initialAuthState={
     loading:false,
     isAuthenticated:!!localStorage.getItem("token"),
-    user_info:JSON.parse(localStorage.getItem("user_info"))||null,
+    user_info:safeParse("user_info")||null,
     error:"",
     signUpSuccess:false,
     token:localStorage.getItem("token")||""

@@ -4,6 +4,7 @@ import "./index.css";
 import "swiper/swiper-bundle.css";
 import "simplebar-react/dist/simplebar.min.css";
 import App from "./App.jsx";
+import ErrorBoundary from "./components/common/ErrorBoundary.jsx";
 import { AppWrapper } from "./components/common/PageMeta.jsx";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { Provider } from "react-redux";
@@ -17,6 +18,7 @@ import { I18nextProvider } from "react-i18next";
 
 createRoot(document.getElementById("root")).render(
   
+  <ErrorBoundary>
   <Provider store={store}>
     <StrictMode>
       <ThemeProvider>
@@ -28,4 +30,5 @@ createRoot(document.getElementById("root")).render(
       </ThemeProvider>
     </StrictMode>
   </Provider>
+  </ErrorBoundary>
 );
